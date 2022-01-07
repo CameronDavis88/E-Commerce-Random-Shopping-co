@@ -3,30 +3,31 @@ import { Card, CardMedia, CardContent, CardActions, Typography, IconButton } fro
 import { AddShoppingCart, CallMissedSharp } from '@material-ui/icons';
 // import { useStyles } from './styles';
 
-const Product = ({ product }) => {
+const Product = ( { product } ) => {
     // this was the way the demonstration did css see useStyles imported above and styles.js file
     // const classes = useStyles();
     // destructuring properties from product from props which is per object as it is mapped in Products
-    const {id, name, description, price, image} = product;
+    const { id, name, description, price, image } = product;
     return (
         <Card 
         // className={classes.root}
         >
             <CardMedia 
             // className={classes.media}
-            image={image}
-            title={name} />
+            image={ image }
+            title={ name } />
             <CardContent>
                 <div
-                //  className={classes.CardContent}
+                 className={CardContent}
                  >
-                    <Typography gutterBottom> {name} </Typography >
+                    <Typography gutterBottom> { name } </Typography >
                     <Typography > { price } </Typography>
                     <Typography > { description } </Typography>
+                    <img className='item-image' src={ image }/>
                 </div>
             </CardContent>
             <CardActions 
-            // className={classes.CardActions}
+            className={CardActions}
             >
                 <IconButton aria-label='Add to Cart'>
                     <AddShoppingCart/>
