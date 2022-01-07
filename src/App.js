@@ -14,7 +14,7 @@ const App = () => {
 fetchProducts();
     }, []);
     
-    console.log(products[0])
+    console.log(products)
 
     return (
         <div>
