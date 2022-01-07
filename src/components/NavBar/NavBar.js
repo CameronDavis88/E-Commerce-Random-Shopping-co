@@ -1,9 +1,11 @@
 import React from 'react';
 import { AppBar, Toolbar,IconButton, Badge, MenuItem, Menu, Typography } from '@material-ui/core';
 import { ShoppingCart } from '@material-ui/icons';
+import './NavBar.css'
+
 const NavBar = () => {
     return (
-        <div>
+        <div className='navBar'>
             <AppBar>
                 <Toolbar>
                     <Typography>

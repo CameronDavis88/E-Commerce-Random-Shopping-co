@@ -4,8 +4,9 @@ import { Products, NavBar } from './components';
 
 const App = () => {
     const [products, setProducts] = useState([]);
-    const fetchProducts = () => {
-        const { data } = commerce.products.list();
+    // I did the async as an arrow function but it did not work, but this anonymous one does.
+    const fetchProducts = async function() {
+        const { data } = await commerce.products.list();
         setProducts(data);
     }
 
@@ -13,12 +14,12 @@ const App = () => {
 fetchProducts();
     }, []);
     
-    console.log(products)
+    console.log(products[0])
 
     return (
         <div>
             <NavBar/>
-            <Products/>
+            <Products products={products}/>
         </div>
     )
 }
