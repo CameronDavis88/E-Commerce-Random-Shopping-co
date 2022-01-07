@@ -1,7 +1,20 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { commerce } from './library/commerce';
 import { Products, NavBar } from './components';
 
 const App = () => {
+    const [products, setProducts] = useState([]);
+    const fetchProducts = () => {
+        const { data } = commerce.products.list();
+        setProducts(data);
+    }
+
+    useEffect(() => {
+fetchProducts();
+    }, []);
+    
+    console.log(products)
+
     return (
         <div>
             <NavBar/>
