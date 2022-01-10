@@ -13,7 +13,7 @@ const NavBar = ({ totalItemsInCart }) => {
                         {/* <img src={} alt="Commerce.js" />  I don't have an image yet */}
                         --Brand name label here--
                     </Typography>
-                    <div className='spaceMaker'/>
+                    <div className='spaceMaker' />
                     <div>
                         <IconButton>
                             <Badge badgeContent={totalItemsInCart} >

@@ -2,7 +2,7 @@ import React from 'react';
 import { Container, Typography, Button, Grid } from '@material-ui/core';
 
 const Cart = ({ cart }) => {
-    // console.log(cart)
+    console.log(cart)
     const isEmpty = !cart.line_items.length;
     
 
@@ -18,8 +18,9 @@ const Cart = ({ cart }) => {
         <>
         <Grid container spacing={3}>
             {cart.line_items.map((item) => (
-                <Grid key={item.id}>
-                    <div> place holder item's name: {item.name}</div>
+                <Grid item xs={12} sm={4} key={item.id}>
+                    <div>{item.quantity} {item.name} {item.price.formatted_with_symbol} </div>
+
                 </Grid>
             ))}
         </Grid>
@@ -32,7 +33,6 @@ const Cart = ({ cart }) => {
                 </div>
             </Typography>
         </div>
-        <div></div>
     </>
        )
     }

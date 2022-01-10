@@ -10,7 +10,6 @@ const Product = ({ product, addToCart }) => {
     // destructuring properties from product from props which is per object as it is mapped in Products
     const { name, price, image, description, id } = product;
     console.log(product);
-    // return <div>Test</div>;
 
     return (
         <Card
@@ -22,17 +21,15 @@ const Product = ({ product, addToCart }) => {
                 title={name} />
             <CardContent>
                 <div
-                    className={CardContent}
-                >
+                    className={CardContent} >
                     <Typography variant='h5' gutterBottom> {name} </Typography >
                     <img className='item-image' src={image.url} />
-                    <Typography variant='h5' > {price.formatted_with_code} </Typography>
+                    <Typography variant='h5' > {price.formatted_with_symbol} </Typography>
                     <Typography dangerouslySetInnerHTML={{ __html: description }} />
                 </div>
             </CardContent>
             <CardActions
-                className={CardActions}
-            >
+                className={CardActions} >
                 <IconButton aria-label='Add to Cart' onClick={() => addToCart(id, 1)} >
                     <AddShoppingCart/>
                 </IconButton>

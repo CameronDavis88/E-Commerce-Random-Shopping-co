@@ -30,6 +30,10 @@ const App = () => {
         console.log(cart.line_items)
     }
 
+    // emptyCart = () => {
+
+    // }
+
     console.log(cart)
 
     // Like componentDidMount for react hooks
@@ -41,7 +45,7 @@ const App = () => {
     return (
         <div>
             <NavBar totalItemsInCart={cart.total_items} />
-            {/* <Products products={products} cart={cart} addToCart={onAddToCart} /> */}
+            <Products products={products} cart={cart} addToCart={onAddToCart} />
             <Cart cart={cart} />
         </div>
     )
