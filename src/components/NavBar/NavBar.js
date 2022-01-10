@@ -3,7 +3,8 @@ import { AppBar, Toolbar,IconButton, Badge, MenuItem, Menu, Typography } from '@
 import { ShoppingCart } from '@material-ui/icons';
 import './NavBar.css'
 
-const NavBar = () => {
+const NavBar = ({ totalItemsInCart }) => {
+    console.log(totalItemsInCart)
     return (
         <div className='navBar'>
             <AppBar>
@@ -12,10 +13,10 @@ const NavBar = () => {
                         {/* <img src={} alt="Commerce.js" />  I don't have an image yet */}
                         --Brand name label here--
                     </Typography>
-                    <div className='SpaceMaker'/>
+                    <div className='spaceMaker'/>
                     <div>
                         <IconButton>
-                            <Badge>
+                            <Badge badgeContent={totalItemsInCart} >
                                 <ShoppingCart/>
                             </Badge>
                         </IconButton>
