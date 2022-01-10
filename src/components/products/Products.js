@@ -8,14 +8,14 @@ import Product from '../Product/Product';
 //     {id: 2, name: 'Pants', description: 'Cheffies', price:'$20', image: 'https://www.chefuniforms.com/img/products/600x1020/9701htw.jpg',}
 // ];
 
-const Products = ({ products }) => {
+const Products = ({ products, addToCart }) => {
     return(
         <main>
          {products.map(product => 
                    <Grid key={product.id} >
                        {/* sending individual objects as it maps through array and sending it to
                        Product through props */}
-                       <Product product={product}/>
+                       <Product product={product} addToCart={addToCart}/>
                    </Grid>
             )}
      
