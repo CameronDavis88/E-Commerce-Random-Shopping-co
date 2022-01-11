@@ -1,24 +1,25 @@
 import React from 'react';
 import { Typography, Button, Card, CardActions, CardContent, CardMedia } from '@material-ui/core';
 
-const CartItem = ({ item }) => {
+const CartItem = ({ item, updateCartQty, removeFromCart }) => {
+    const { name, image, price, quantity, id } = item;
     return (
         <Card>
            
-            <CardMedia   alt={item.name}  >
-                <img src={item.image.url} className='cartItemImage' />
+            <CardMedia   alt={name}  >
+                <img src={image.url} className='cartItemImage' alt={name}/>
             </CardMedia>
             <CardContent >
-                <Typography variant='h4' >{item.name} </Typography>
-                <Typography variant='h5' >{item.price.formatted_with_symbol}</Typography>
+                <Typography variant='h4' >{name} </Typography>
+                <Typography variant='h5' >{price.formatted_with_symbol}</Typography>
             </CardContent>
             <CardActions>
                 <div className='buttons' >
-                    <Button type='button' color='primary' size='small'>-</Button>
-                    <Typography variant='h6' >{item.quantity}</Typography>
-                    <Button type='button' color='primary' size='small'>+</Button>
+                    <Button type='button' size='small' onClick={() => updateCartQty(id, quantity - 1)} >-</Button>
+                    <Typography variant='h6' >{quantity}</Typography>
+                    <Button type='button' size='small' onClick={() => updateCartQty(id, quantity + 1)}>+</Button>
                 </div>
-                <Button variant='contained' type='button' color='secondary' >Remove</Button>
+                <Button onClick={() => removeFromCart(id)} variant='contained' type='button' color='secondary' >Remove</Button>
             </CardActions>
         </Card>
     )

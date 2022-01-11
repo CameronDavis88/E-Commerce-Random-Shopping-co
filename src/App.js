@@ -1,6 +1,9 @@
 import React, { useState, useEffect, Component } from 'react';
 import { commerce } from './library/commerce';
 import { Products, NavBar, Cart } from './components';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { Repeat } from '@material-ui/icons';
+
 
 const App = () => {
     // React Hook States
@@ -25,16 +28,28 @@ const App = () => {
     //     console.log(cart)
     // }  
 
-    const onAddToCart = async function(productId, quantity) {
-        setCart(await commerce.cart.add(productId, quantity));
-        console.log(cart.line_items)
+    const onAddToCart = async function (productId, quantity) {
+        const { cart } = await commerce.cart.add(productId, quantity);
+        setCart(cart);
+        // console.log(cart.line_items)
     }
 
-    // emptyCart = () => {
+    const updateCartQty = async function (productId, quantity) {
+        const { cart } = await commerce.cart.update(productId, { quantity });
+        setCart(cart);
+    }
 
-    // }
+    const removeFromCart = async function (productId) {
+        const { cart } = await commerce.cart.remove(productId);
+        setCart(cart);
+    }
 
-    console.log(cart)
+    const emptyCart = async function () {
+        const { cart } = await commerce.cart.empty();
+        setCart(cart);
+    }
+
+    // console.log(cart)
 
     // Like componentDidMount for react hooks
     useEffect(() => {
@@ -43,11 +58,24 @@ const App = () => {
     }, []);
 
     return (
-        <div>
-            <NavBar totalItemsInCart={cart.total_items} />
-            {/* <Products products={products} cart={cart} addToCart={onAddToCart} /> */}
-            <Cart cart={cart} />
-        </div>
+        <Router>
+            <div>
+                <NavBar totalItemsInCart={cart.total_items} />
+                <Switch>
+                    <Route exact path="/" >
+                        <Products products={products} cart={cart} addToCart={onAddToCart} />
+                    </Route>
+                    <Route PATH="/cart" >
+                        <Cart cart={cart}
+                            updateCartQty={updateCartQty}
+                            removeFromCart={removeFromCart}
+                            emptyCart={emptyCart}
+                        />
+                    </Route>
+                </Switch>
+            </div>
+        </Router>
+
     )
 }
 

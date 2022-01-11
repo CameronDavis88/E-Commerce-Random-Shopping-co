@@ -23,7 +23,7 @@ const Product = ({ product, addToCart }) => {
                 <div
                     className={CardContent} >
                     <Typography variant='h5' gutterBottom> {name} </Typography >
-                    <img className='item-image' src={image.url} />
+                    <img className='item-image' src={image.url} alt={name} />
                     <Typography variant='h5' > {price.formatted_with_symbol} </Typography>
                     <Typography dangerouslySetInnerHTML={{ __html: description }} />
                 </div>
