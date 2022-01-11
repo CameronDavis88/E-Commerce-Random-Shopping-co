@@ -1,6 +1,6 @@
 import React, { useState, useEffect, Component } from 'react';
 import { commerce } from './library/commerce';
-import { Products, NavBar, Cart } from './components';
+import { Products, NavBar, Cart, Checkout } from './components';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Repeat } from '@material-ui/icons';
 
@@ -65,12 +65,15 @@ const App = () => {
                     <Route exact path="/" >
                         <Products products={products} cart={cart} addToCart={onAddToCart} />
                     </Route>
-                    <Route PATH="/cart" >
+                    <Route path="/cart" >
                         <Cart cart={cart}
                             updateCartQty={updateCartQty}
                             removeFromCart={removeFromCart}
                             emptyCart={emptyCart}
                         />
+                    </Route>
+                    <Route exact path="/checkout" >
+                        <Checkout cart={cart}  />
                     </Route>
                 </Switch>
             </div>

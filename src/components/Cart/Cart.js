@@ -38,7 +38,7 @@ const Cart = ({ cart, updateCartQty, emptyCart, removeFromCart }) => {
                 Subtotal: {cart.subtotal.formatted_with_symbol}
                 <div>
                     <Button onClick={emptyCart} size='large' type='button' variant='contained' color='secondary'>Empty Cart</Button>
-                    <Button size='large' type='button' variant='contained' color='primary' >Checkout</Button>
+                    <Button component={Link} to="checkout" size='large' type='button' variant='contained' color='primary' >Checkout</Button>
                 </div>
             </Typography>
         </div>
