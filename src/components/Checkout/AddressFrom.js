@@ -19,13 +19,15 @@ const AddressFrom = ({ checkoutToken }) => {
     //shippingOptions is already an array
     const options = shippingOptions.map((shippingObj) => ({ id: shippingObj.id, label: `${shippingObj.description} - (${shippingObj.price.formatted_with_symbol})`}))
 
-    console.log(subdivisions)
-    console.log(shippingOptions)
+    // console.log(subdivisions)
+    // console.log(shippingOptions)
+    // console.log(options)
+    // console.log(shippingOption)
 
 
     const fetchShippingCountries = async function (checkoutTokenId) {
         const { countries } = await commerce.services.localeListShippingCountries(checkoutTokenId);
-        console.log(countries);
+        // console.log(countries);
         setShippingCountries(countries);
         setShippingCountry(Object.keys(countries[0]));
     }
@@ -37,9 +39,8 @@ const AddressFrom = ({ checkoutToken }) => {
     }
 
     const fetchShippingOptions = async function(checkoutTokenId, country, region = null){
-        const { options } = await commerce.getShippingOptions(checkoutTokenId, {country, region});
+        const options = await commerce.checkout.getShippingOptions(checkoutTokenId, {country, region});
         setShippingOptions(options);
-        console.log(options);
         setShippingOption(options[0].id);
     }
 
@@ -52,7 +53,7 @@ const AddressFrom = ({ checkoutToken }) => {
     }, [shippingCountry]);
 
     useEffect(() => {
-        console.log(options)
+        // console.log(options)
         if(shippingSubdivision) fetchShippingOptions(checkoutToken.id, shippingCountry, shippingSubdivision);
     }, [shippingSubdivision]);
 
@@ -74,7 +75,7 @@ const AddressFrom = ({ checkoutToken }) => {
                         <CustomInput name='zip' label='ZIP code' />
                         <Grid type item xs={12} sm={6} >
                             <InputLabel>Shipping Country</InputLabel>
-                            <Select value={shippingCountry} fillWidth onChange={(e) => setShippingCountry(e.target.value)} >
+                            <Select value={shippingCountry} fullWidth onChange={(e) => setShippingCountry(e.target.value)} >
                                 {countries.map((country) => (
                                     <MenuItem key={country.id} value={country.id}>{country.label}</MenuItem>
                                 ))}
@@ -83,7 +84,7 @@ const AddressFrom = ({ checkoutToken }) => {
                         </Grid>
                         <Grid type item xs={12} sm={6} >
                             <InputLabel>Shipping Subdivision</InputLabel>
-                            <Select value={shippingSubdivision} fillWidth onChange={(e) => setShippingSubdivision(e.target.value)} >
+                            <Select value={shippingSubdivision} fullWidth onChange={(e) => setShippingSubdivision(e.target.value)} >
                             {subdivisions.map((subdivision) => (
                                     <MenuItem key={subdivision.id} value={subdivision.id}>{subdivision.label} </MenuItem>
                                 ))}
@@ -92,7 +93,7 @@ const AddressFrom = ({ checkoutToken }) => {
                         </Grid>
                         <Grid type item xs={12} sm={6} >
                             <InputLabel>Shipping Options</InputLabel>
-                            <Select value={shippingOption} fillWidth onChange={(e) => setShippingOption(e.target.value)} >
+                            <Select value={shippingOption} fullWidth onChange={(e) => setShippingOption(e.target.value)} >
                             {options.map((option) => (
                                     <MenuItem key={option.id} value={option.id}>{option.label} </MenuItem>
                                 ))}
