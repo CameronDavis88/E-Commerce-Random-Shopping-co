@@ -5,7 +5,7 @@ import AddressForm from './AddressFrom';
 import PaymentForm from './PaymentFrom';
 import { commerce } from '../../library/commerce';
 
-const steps = ['Shipping address', 'Payment details']
+const steps = ['Shipping address', 'Payment details'];
 
 const Checkout = ({ cart }) => {
     const [activeStep, setActiveStep] = useState(0);

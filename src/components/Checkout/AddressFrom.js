@@ -1,28 +1,33 @@
 import React, { useState, useEffect } from 'react';
-import { InputLabel,Select, MenuItem, Button, Grid, Typography } from '@material-ui/core';
+import { InputLabel, Select, MenuItem, Button, Grid, Typography } from '@material-ui/core';
 import { useForm, FormProvider } from 'react-hook-form';
 import { commerce } from '../../library/commerce';
 import CustomInput from './CustomInput';
 
 const AddressFrom = ({ checkoutToken }) => {
 
-const [shippingCountries, setShippingCountries] = useState([]);
-const [shippingCountry, setShippingCountry] = useState('');
-const [shippingSubdivisions, setShippingSubdivisions] = useState([]);
-const [shippingSubdivision, setShippingSubdivision] = useState('');
-const [shippingOptions, setShippingOptions] = useState([]);
-const [shippingOption, setShippingOption] = useState('');
-const methods = useForm();
-
-const fetchShippingCountries = async function(checkoutTokenId){
-    const { countries } = await commerce.services.localeListShippingCountries(checkoutTokenId);
+    const [shippingCountries, setShippingCountries] = useState([]);
+    const [shippingCountry, setShippingCountry] = useState('');
+    const [shippingSubdivisions, setShippingSubdivisions] = useState([]);
+    const [shippingSubdivision, setShippingSubdivision] = useState('');
+    const [shippingOptions, setShippingOptions] = useState([]);
+    const [shippingOption, setShippingOption] = useState('');
+    const methods = useForm();
+    //shippingCountries comes back as an object this turns it into and array of objects each with an id and label key which is the name of country
+    const countries = Object.entries(shippingCountries).map(([code, name]) => ({ id: code, label: name }))
     console.log(countries)
-    setShippingCountries(countries);
-}
 
-useEffect(() => {
-    fetchShippingCountries(checkoutToken.id)
-}, []);
+    const fetchShippingCountries = async function (checkoutTokenId) {
+        const { countries } = await commerce.services.localeListShippingCountries(checkoutTokenId);
+        console.log(countries);
+        setShippingCountries(countries);
+        setShippingCountry(Object.keys(countries[0]));
+
+    }
+
+    useEffect(() => {
+        fetchShippingCountries(checkoutToken.id)
+    }, []);
 
 
 
@@ -41,16 +46,19 @@ useEffect(() => {
                         <CustomInput required name='city' label='City' />
                         <CustomInput required name='zip' label='ZIP code' />
 
-                        {/* <Grid type item xs={12} sm={6} >
+                        <Grid type item xs={12} sm={6} >
                             <InputLabel>Shipping Country</InputLabel>
-                            <Select value={} fillWidth onChange={} >
-                                <MenuItem key={} value={}>
-                                    Select me
-                                </MenuItem>
+                            <Select value={shippingCountry} fillWidth onChange={(e) => setShippingCountry(e.target.value)} >
+                                {countries.map((country) => (
+                                    <MenuItem key={country.id} value={country.id}>
+                                        {country.label}
+                                    </MenuItem>
+                                ))}
+
                             </Select>
                         </Grid>
 
-                        <Grid type item xs={12} sm={6} >
+                        {/* <Grid type item xs={12} sm={6} >
                             <InputLabel>Shipping Subdivision</InputLabel>
                             <Select value={} fillWidth onChange={} >
                                 <MenuItem key={} value={}>
