@@ -1,8 +1,9 @@
-import React, { useState, useEffect, Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import { commerce } from './library/commerce';
 import { Products, NavBar, Cart, Checkout } from './components';
+// import Review from './components/Checkout/Review';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { Repeat } from '@material-ui/icons';
+// import { Repeat } from '@material-ui/icons';
 
 
 const App = () => {
@@ -73,8 +74,11 @@ const App = () => {
                         />
                     </Route>
                     <Route exact path="/checkout" >
-                        <Checkout cart={cart}  />
+                        <Checkout cart={cart} />
                     </Route>
+                    {/* <Route  path="/checkout/review" >
+                            <Review />
+                    </Route> */}
                 </Switch>
             </div>
         </Router>

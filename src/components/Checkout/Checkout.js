@@ -4,13 +4,15 @@ import { Paper, Stepper, Step, StepLabel, Typography, CircularProgress, Divider,
 import AddressForm from './AddressFrom';
 import PaymentForm from './PaymentFrom';
 import { commerce } from '../../library/commerce';
+// import Review from './Review';
 
 const steps = ['Shipping address', 'Payment details'];
 
 const Checkout = ({ cart }) => {
     const [activeStep, setActiveStep] = useState(0);
-
     const [checkoutToken, setCheckoutToken] = useState('');
+    //This is the data from the shipping info sent as an object sent from AddressForm so it can be sent into next step: PaymentForm
+    const [shippingData, setShippingData] = useState({});
 
     useEffect(
         () => {
@@ -26,6 +28,14 @@ const Checkout = ({ cart }) => {
         generateToken();
     }, [cart]);
 
+    const nextStep = () => setActiveStep((previousActiveStep) => previousActiveStep + 1);
+    const backStep = () => setActiveStep((previousActiveStep) => previousActiveStep - 1);
+
+    const next = function (data) {
+        setShippingData(data);
+        nextStep();
+    }
+
     const ConfirmationForm = () => {
         return (
             <div>Confirmation Form</div>
@@ -33,12 +43,14 @@ const Checkout = ({ cart }) => {
 
     }
 
+    const testingProps = () =>'testingProps'
 
     //conditionally rendering the form
+
     const Form = () => (
         activeStep === 0
-            ? <AddressForm checkoutToken={checkoutToken} />
-            : <PaymentForm />
+            ? <AddressForm checkoutToken={checkoutToken} next={next} nextStep={nextStep} testingProps={testingProps} />
+            : <PaymentForm checkoutToken={checkoutToken} shippingData={shippingData}  />
     )
 
     return (
@@ -54,8 +66,13 @@ const Checkout = ({ cart }) => {
                     )
                     )}
                 </Stepper>
-                {/* If it is in the last step display the Confirmation Form for review if not display From if token was returned*/}
-                {activeStep === steps.length ? <ConfirmationForm /> : checkoutToken && <Form />}
+
+                
+                
+    {/* If it is in the last step display the Confirmation Form for review if not display From if token was returned*/}
+                
+                {activeStep === steps.length ? <ConfirmationForm  /> : checkoutToken && <Form /> }
+
             </main>
         </>
     )
