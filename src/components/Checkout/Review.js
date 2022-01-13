@@ -1,14 +1,8 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import { Typography, List, ListItem, ListItemText } from '@material-ui/core';
 import { Product } from '..';
 
-const Review = ({ checkoutToken, shippingData }) => {
-
-    useEffect(() => {
-        // console.log(shippingData)
-    }, []);
-
-    
+const Review = ({ checkoutToken }) => {
 
     return (
         <>

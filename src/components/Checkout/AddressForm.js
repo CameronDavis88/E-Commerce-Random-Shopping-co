@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import { InputLabel, Select, MenuItem, Button, Grid, Typography } from '@material-ui/core';
 import { useForm, FormProvider } from 'react-hook-form';
 import { commerce } from '../../library/commerce';
@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom';
 
 
 
-const AddressForm = ({ checkoutToken, next, nextStep, testingProps}) => {
+const AddressForm = ({ checkoutToken, next, nextStep }) => {
 
    
 
@@ -21,25 +21,26 @@ const AddressForm = ({ checkoutToken, next, nextStep, testingProps}) => {
     const [shippingSubdivision, setShippingSubdivision] = useState('');
     const [shippingOptions, setShippingOptions] = useState([]);
     const [shippingOption, setShippingOption] = useState('');
-    const {handleSubmit, register} = useForm();
+    const {handleSubmit} = useForm();
     const  methods = useForm();
 
 
     //shippingCountries comes back as an object this turns it into and array of objects each with an id and label key which is the name of country
-    const countriesArr = Object.entries(shippingCountries).map(([code, name]) => ({ id: code, label: name }))
-    const subdivisionsArr = Object.entries(shippingSubdivisions).map(([code, name]) => ({ id: code, label: name }))
+    const countries = Object.entries(shippingCountries).map(([code, name]) => ({ id: code, label: name }))
+    const subdivisions = Object.entries(shippingSubdivisions).map(([code, name]) => ({ id: code, label: name }))
     //shippingOptions is already an array --this is making the field display the type of option and the price by its id
-    const optionsArr = shippingOptions.map((shippingObj) => ({ id: shippingObj.id, label: `${shippingObj.description} - (${shippingObj.price.formatted_with_symbol})`}))
+    const options = shippingOptions.map((shippingObj) => ({ id: shippingObj.id, label: `${shippingObj.description} - (${shippingObj.price.formatted_with_symbol})`}))
 
     // console.log(subdivisions)
     // console.log(shippingOptions)
-    // console.log(countriesArr[0])
+    // console.log(countries[0])
     // console.log(shippingOption)
     const fetchShippingCountries = async function (checkoutTokenId) {
         const { countries } = await commerce.services.localeListShippingCountries(checkoutTokenId);
         // console.log(countries);
         setShippingCountries(countries);
         setShippingCountry(Object.keys(countries[0]));
+        // console.log(countries[0]);
     }
 
     const fetchSubdivisions = async function(countryCode){
@@ -57,7 +58,7 @@ const AddressForm = ({ checkoutToken, next, nextStep, testingProps}) => {
 
     useEffect(() => {
         fetchShippingCountries(checkoutToken.id)
-        // console.log()
+        console.log()
     }, []);
 
     useEffect(() => {
@@ -69,20 +70,15 @@ const AddressForm = ({ checkoutToken, next, nextStep, testingProps}) => {
         if(shippingSubdivision) fetchShippingOptions(checkoutToken.id, shippingCountry, shippingSubdivision);
     }, [shippingSubdivision]);
 
-    const onSubmit = (data) => {
-        // e.preventDefault();
-        // console.log(data);
-        // console.log(e);
-        next(data);
+    // const onSubmit = ( data) => {
+    //     // e.preventDefault();
+    //     next(data);
+    // }
 
+    const submitForm = (data) => {
+        next(data)
     }
     
-
-
-    
-
-
-
     return (
         //Employing React hook form for all the inputs
         <>
@@ -92,7 +88,8 @@ const AddressForm = ({ checkoutToken, next, nextStep, testingProps}) => {
                 <form 
                 // onSubmit={handleSubmit((data)=>onSubmit(data))}
                 //  onSubmit={ handleSubmit( (data) =>  next({ ...data, shippingCountry, shippingSubdivision, shippingOption })) }
-                onSubmit={ handleSubmit( (data) => onSubmit({ ...data, shippingCountry, shippingSubdivision, shippingOption })) }
+                // onSubmit={ handleSubmit( (data) => onSubmit({ ...data, shippingCountry, shippingSubdivision, shippingOption })) }
+                onSubmit={ methods.handleSubmit( (data) => submitForm({ ...data, shippingCountry, shippingSubdivision, shippingOption })) }
 
                   >
                     <Grid container spacing={3} >
@@ -109,7 +106,7 @@ const AddressForm = ({ checkoutToken, next, nextStep, testingProps}) => {
                         <Grid type item xs={12} sm={6} >
                             <InputLabel>Shipping Country</InputLabel>
                             <Select value={shippingCountry} fullWidth onChange={(e) => setShippingCountry(e.target.value)} >
-                                {countriesArr.map((country) => (
+                                {countries.map((country) => (
                                     <MenuItem key={country.id} value={country.id}>{country.label}</MenuItem>
                                 ))}
 
@@ -118,7 +115,7 @@ const AddressForm = ({ checkoutToken, next, nextStep, testingProps}) => {
                         <Grid type item xs={12} sm={6} >
                             <InputLabel>Shipping Subdivision</InputLabel>
                             <Select value={shippingSubdivision} fullWidth onChange={(e) => setShippingSubdivision(e.target.value)} >
-                            {subdivisionsArr.map((subdivision) => (
+                            {subdivisions.map((subdivision) => (
                                     <MenuItem key={subdivision.id} value={subdivision.id}>{subdivision.label} </MenuItem>
                                 ))}
                                 
@@ -127,7 +124,7 @@ const AddressForm = ({ checkoutToken, next, nextStep, testingProps}) => {
                         <Grid type item xs={12} sm={6} >
                             <InputLabel>Shipping Options</InputLabel>
                             <Select value={shippingOption} fullWidth onChange={(e) => setShippingOption(e.target.value)} >
-                            {optionsArr.map((option) => (
+                            {options.map((option) => (
                                     <MenuItem key={option.id} value={option.id}>{option.label}</MenuItem>
                                 ))}
                                 
@@ -139,12 +136,13 @@ const AddressForm = ({ checkoutToken, next, nextStep, testingProps}) => {
                      <div style={{display: 'flex', justifyContent:'space-between'}} >
                          <Button component={Link} to="/cart" variant='outlined'>Back to Cart</Button>
                          <Button 
-                         onClick={onSubmit}
-                        // onClick={() => next()}
+                        //  onClick={onSubmit}
+                        // onClick={() => nextStep()}
+                        onClick={() => submitForm()}
+
                           type="submit" variant='contained' color='primary'>Next Step</Button>
                          </div>           
             </FormProvider>
-            {/* <Button onClick={() => nextStep()} >Test!!!!!!!</Button> */}
         </>
     )
 }

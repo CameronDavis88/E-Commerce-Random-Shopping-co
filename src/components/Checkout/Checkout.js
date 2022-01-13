@@ -25,11 +25,14 @@ const Checkout = ({ cart, error, onCaptureCheckout, order }) => {
 
             }
         }
-        console.log(shippingData)
+        // console.log(shippingData)
         generateToken();
     }, [cart]);
 
-    const nextStep = () => setActiveStep((previousActiveStep) => previousActiveStep + 1);
+    const nextStep = () => {
+        setActiveStep((previousActiveStep) => previousActiveStep + 1);
+        console.log(shippingData)
+    }
     const backStep = () => setActiveStep((previousActiveStep) => previousActiveStep - 1);
 
     const next = function (data) {
