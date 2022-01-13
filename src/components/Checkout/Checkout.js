@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Paper, Stepper, Step, StepLabel, Typography, CircularProgress, Divider, Button } from '@material-ui/core';
 
-import AddressForm from './AddressFrom';
-import PaymentForm from './PaymentFrom';
+import AddressForm from './AddressForm';
+import PaymentForm from './PaymentForm';
 import { commerce } from '../../library/commerce';
 // import Review from './Review';
 
 const steps = ['Shipping address', 'Payment details'];
 
-const Checkout = ({ cart }) => {
+const Checkout = ({ cart, error, onCaptureCheckout, order }) => {
     const [activeStep, setActiveStep] = useState(0);
     const [checkoutToken, setCheckoutToken] = useState('');
     //This is the data from the shipping info sent as an object sent from AddressForm so it can be sent into next step: PaymentForm
@@ -51,7 +51,7 @@ const Checkout = ({ cart }) => {
     const Form = () => (
         activeStep === 0
             ? <AddressForm checkoutToken={checkoutToken} next={next} nextStep={nextStep} testingProps={testingProps} />
-            : <PaymentForm checkoutToken={checkoutToken} shippingData={shippingData}  />
+            : <PaymentForm nextStep={nextStep} checkoutToken={checkoutToken} shippingData={shippingData} backStep={backStep} onCaptureCheckout={onCaptureCheckout} />
     )
 
     return (

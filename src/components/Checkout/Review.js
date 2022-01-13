@@ -5,15 +5,13 @@ import { Product } from '..';
 const Review = ({ checkoutToken, shippingData }) => {
 
     useEffect(() => {
-        console.log(shippingData)
+        // console.log(shippingData)
     }, []);
 
     
 
     return (
         <>
-        This should be the confirmation review page!!!!
-        
             <Typography variant='h6' >Order Summary</Typography>
             <List disablePadding >
                 {checkoutToken.live.line_items.map((product) => (

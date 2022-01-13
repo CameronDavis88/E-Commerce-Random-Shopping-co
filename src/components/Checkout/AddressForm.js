@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom';
 
 
 
-const AddressFrom = ({ checkoutToken, next, nextStep, testingProps}) => {
+const AddressForm = ({ checkoutToken, next, nextStep, testingProps}) => {
 
    
 
@@ -37,7 +37,7 @@ const AddressFrom = ({ checkoutToken, next, nextStep, testingProps}) => {
     // console.log(shippingOption)
     const fetchShippingCountries = async function (checkoutTokenId) {
         const { countries } = await commerce.services.localeListShippingCountries(checkoutTokenId);
-        console.log(countries);
+        // console.log(countries);
         setShippingCountries(countries);
         setShippingCountry(Object.keys(countries[0]));
     }
@@ -69,10 +69,10 @@ const AddressFrom = ({ checkoutToken, next, nextStep, testingProps}) => {
         if(shippingSubdivision) fetchShippingOptions(checkoutToken.id, shippingCountry, shippingSubdivision);
     }, [shippingSubdivision]);
 
-    const onSubmit = (data, e) => {
+    const onSubmit = (data) => {
         // e.preventDefault();
-        console.log(data);
-        console.log(e);
+        // console.log(data);
+        // console.log(e);
         next(data);
 
     }
@@ -149,4 +149,4 @@ const AddressFrom = ({ checkoutToken, next, nextStep, testingProps}) => {
     )
 }
 
-export default AddressFrom;
+export default AddressForm;
