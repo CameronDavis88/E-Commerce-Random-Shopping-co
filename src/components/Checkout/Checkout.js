@@ -25,6 +25,7 @@ const Checkout = ({ cart }) => {
 
             }
         }
+        console.log(shippingData)
         generateToken();
     }, [cart]);
 

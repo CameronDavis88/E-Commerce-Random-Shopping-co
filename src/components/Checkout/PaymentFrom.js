@@ -6,6 +6,9 @@ import { loadStripe } from '@stripe/stripe-js';
 import Review from './Review';
 
 const PaymentFrom = ({ checkoutToken, shippingData}) => {
+
+    
+
     return (
        <>
        <Review checkoutToken={checkoutToken} shippingData={shippingData}/>
