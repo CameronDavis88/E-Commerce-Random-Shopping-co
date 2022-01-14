@@ -69,12 +69,12 @@ const AddressForm = ({ checkoutToken, next, nextStep }) => {
                 <form onSubmit={handleSubmit((data) => onSubmit({ ...data, shippingCountry, shippingSubdivision, shippingOption }), onError)} >
                     <Grid container spacing={3} >
 
-                        <TextField style={{ margin: 15 }} name='firstName' label='First name'{...register('firstName')} />
-                        <TextField style={{ margin: 15 }} name='lastName' label='Last name'{...register('lastName')} />
+                        <TextField style={{ margin: 15 }} name='firstName' label='First name'{...register('firstName')} defaultValue={''}/>
+                        <TextField style={{ margin: 15 }} name='lastName' label='Last name'{...register('lastName')} defaultValue={''}/>
                         <TextField style={{ margin: 15 }} name='email' label='email'{...register('email')} />
-                        <TextField style={{ margin: 15 }} name='address1' label='Address'{...register('address1')} />
-                        <TextField style={{ margin: 15 }} name='city' label='City'{...register('city')} />
-                        <TextField style={{ margin: 15 }} name='zip' label='ZIP code'{...register('zip')} />
+                        <TextField style={{ margin: 15 }} name='address1' label='Address'{...register('address1')} defaultValue={''}/>
+                        <TextField style={{ margin: 15 }} name='city' label='City'{...register('city')} defaultValue={''}/>
+                        <TextField style={{ margin: 15 }} name='zip' label='ZIP code'{...register('zip')} defaultValue={''}/>
 
                         <Grid type item xs={12} sm={6} >
                             <InputLabel>Shipping Country</InputLabel>

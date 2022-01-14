@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Paper, Stepper, Step, StepLabel, Typography, CircularProgress, Divider, Button } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 
 import AddressForm from './AddressForm';
 import PaymentForm from './PaymentForm';
@@ -12,6 +13,11 @@ const Checkout = ({ cart, error, onCaptureCheckout, order }) => {
     const [activeStep, setActiveStep] = useState(0);
     const [checkoutToken, setCheckoutToken] = useState('');
     const [shippingData, setShippingData] = useState({});
+
+    useEffect(() => {
+        console.log(cart)
+        console.log(order)
+    }, [])
 
     useEffect(
         () => {
@@ -39,12 +45,31 @@ const Checkout = ({ cart, error, onCaptureCheckout, order }) => {
         nextStep();
     }
 
-    const ConfirmationForm = () => {
-        return (
-            <div>Confirmation Form</div>
-        )
+    let ConfirmationForm = () => (
+    // order.customer ? (
+            <>
+            <div>
+                <Typography variant='h5' >Success! Thank you for your purchase, {shippingData.firstName} {shippingData.lastName}!</Typography>
+                <Divider />
+                <Typography variant='subtitle2' >Order ref : ref</Typography>
+            </div>
+            <br/>
+            <Button component={Link} to="/" variant='outlined' type='button'></Button>
+            </>
+    ) 
+    // : (
+    //     <div>
+    //         <CircularProgress  />
+    //     </div>
+    // );
 
-    }
+    // if(error){
+    //     <>
+    //     <Typography variant='h5' >Error: {error}</Typography>
+    //     <br/>
+    //     <Button component={Link} to="/" variant='outlined' type='button'></Button>
+    //     </>
+    // }
 
     //conditionally rendering the form
     const Form = () => (
