@@ -2,14 +2,14 @@ import React from 'react';
 import { TextField, Grid } from '@material-ui/core';
 import { useFormContext, Controller } from 'react-hook-form';
 
-const CustomInput = ({ name, label }) => {
-    const { control } = useFormContext();
-    // const { register } = useForm();
+const CustomInput = ({ name, label, value, handleChange }) => {
+  const { control } = useFormContext();
+  // const { register } = useForm();
   const isError = false;
 
-    return (
-        <Grid item xs={12} sm={6} >
-             <Controller 
+  return (
+    <Grid item xs={12} sm={6} >
+      <Controller 
              as={TextField}
               control={control}
               required
@@ -17,15 +17,11 @@ const CustomInput = ({ name, label }) => {
               fullWidth
               label={label}
               error={isError}
-            //   {...register(name)} 
-              // render={({ field }) => {
-              //   return <TextField {...field} fullWidth label={label} />;  
-              // }} 
-
-            //    render={({})=> ( <TextField fullWidth label={label} required /> )} 
+              value={value}
+              onChange={handleChange}
                />
-        </Grid>
-    )
+    </Grid>
+  )
 }
 
 export default CustomInput;

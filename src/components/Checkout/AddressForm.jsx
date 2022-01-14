@@ -14,32 +14,38 @@ const AddressForm = ({ checkoutToken, next, nextStep }) => {
     const [shippingSubdivision, setShippingSubdivision] = useState('');
     const [shippingOptions, setShippingOptions] = useState([]);
     const [shippingOption, setShippingOption] = useState('');
-    const  methods = useForm();
+    const methods = useForm();
+
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [address1, setAddress] = useState('');
+    const [email, setEmail] = useState('');
+    const [city, setCity] = useState('');
+    const [zip, setZip] = useState('');
 
     //shippingCountries comes back as an object this turns it into and array of objects each with an id and label key which is the name of country
     const countriesArr = Object.entries(shippingCountries).map(([code, name]) => ({ id: code, label: name }))
     const subdivisionsArr = Object.entries(shippingSubdivisions).map(([code, name]) => ({ id: code, label: name }))
     //shippingOptions is already an array --this is making the field display the type of option and the price by its id
-    const optionsArr = shippingOptions.map((shippingObj) => ({ id: shippingObj.id, label: `${shippingObj.description} - (${shippingObj.price.formatted_with_symbol})`}))
+    const optionsArr = shippingOptions.map((shippingObj) => ({ id: shippingObj.id, label: `${shippingObj.description} - (${shippingObj.price.formatted_with_symbol})` }))
 
     const fetchShippingCountries = async function (checkoutTokenId) {
-    const { countries } = await commerce.services.localeListShippingCountries(checkoutTokenId);
+        const { countries } = await commerce.services.localeListShippingCountries(checkoutTokenId);
         // if(shippingCountries)
         setShippingCountries(countries);
         setShippingCountry(Object.keys(countries)[0]);
         setShippingCountry(Object.keys(countries)[0]);
-
     }
 
-    const fetchSubdivisions = async function(countryCode){
+    const fetchSubdivisions = async function (countryCode) {
         const { subdivisions } = await commerce.services.localeListSubdivisions(countryCode);
         // if(subdivisions)
         setShippingSubdivisions(subdivisions);
         setShippingSubdivision(Object.keys(subdivisions)[0]);
     }
 
-    const fetchShippingOptions = async function(checkoutTokenId, country, region = null){
-        const options = await commerce.checkout.getShippingOptions(checkoutTokenId, {country, region});
+    const fetchShippingOptions = async function (checkoutTokenId, country, region = null) {
+        const options = await commerce.checkout.getShippingOptions(checkoutTokenId, { country, region });
         // if(options)
         setShippingOptions(options);
         setShippingOption(options[0].id);
@@ -50,33 +56,38 @@ const AddressForm = ({ checkoutToken, next, nextStep }) => {
     }, []);
 
     useEffect(() => {
-        if(shippingCountry) fetchSubdivisions(shippingCountry)
+        if (shippingCountry) fetchSubdivisions(shippingCountry)
     }, [shippingCountry]);
 
     useEffect(() => {
-        if(shippingSubdivision) fetchShippingOptions(checkoutToken.id, shippingCountry, shippingSubdivision);
+        if (shippingSubdivision) fetchShippingOptions(checkoutToken.id, shippingCountry, shippingSubdivision);
     }, [shippingSubdivision]);
 
-  
-        
-    const onSubmit =  (data) => {
+    const onSubmit = (data) => {
+        methods.handleSubmit(
+            next({
+                ...data,
+                shippingCountry,
+                shippingSubdivision,
+                shippingOption,
+                firstName,
+                lastName,
+                email,
+                address1,
+                city,
+                zip
+            })
+        );
+    }
 
-        methods.handleSubmit( next({ ...data, shippingCountry, shippingSubdivision, shippingOption }))
-
-    //    submit(data)
-    //    console.log(data)
+    const changeFirstName = (e) => {
+        setFirstName(e.target.value)
     }
 
     // const submit = (data) => {
     //     methods.handleSubmit( next({ ...data, shippingCountry, shippingSubdivision, shippingOption })) 
     // }
 
-
-
- 
-
-
-    
     return (
         //Employing React hook form for all the inputs
         <>
@@ -91,15 +102,15 @@ const AddressForm = ({ checkoutToken, next, nextStep }) => {
                 // onSubmit={ onSubmit((data) => submitForm({ ...data, shippingCountry, shippingSubdivision, shippingOption })) }
                 // onSubmit={ submit((data) => submitForm({ ...data, shippingCountry, shippingSubdivision, shippingOption })) }
                 // onSubmit={handleSubmit((data)=>onSubmit(data))}
-                  >
+                >
                     <Grid container spacing={3} >
                         {/* CustomInput is a reusable input component I created using react-hook-form */}
-                        <CustomInput name='firstname' label='First name' />
-                        <CustomInput name='lastname' label='Last name' />
-                        <CustomInput name='address1' label='Address' />
-                        <CustomInput name='email' label='Email' />
-                        <CustomInput name='city' label='City' />
-                        <CustomInput name='zip' label='ZIP code' />
+                        <CustomInput onChange={changeFirstName} value={firstName} name='firstName' label='First name' handleChange={changeFirstName} />
+                        <CustomInput onChange={e => setLastName(e.target.value)} value={lastName} name='lastName' label='Last name' />
+                        <CustomInput onChange={e => setAddress(e.target.value)} value={address1} name='address1' label='Address' />
+                        <CustomInput onChange={e => setEmail(e.target.value)} value={email} name='email' label='Email' />
+                        <CustomInput onChange={e => setCity(e.target.value)} value={city} name='city' label='City' />
+                        <CustomInput onChange={e => setZip(e.target.value)} value={zip} name='zip' label='ZIP code' />
 
                         <Grid type item xs={12} sm={6} >
                             <InputLabel>Shipping Country</InputLabel>
@@ -113,32 +124,32 @@ const AddressForm = ({ checkoutToken, next, nextStep }) => {
                         <Grid type item xs={12} sm={6} >
                             <InputLabel>Shipping Subdivision</InputLabel>
                             <Select value={shippingSubdivision} fullWidth onChange={(e) => setShippingSubdivision(e.target.value)} >
-                            {subdivisionsArr.map((subdivision) => (
+                                {subdivisionsArr.map((subdivision) => (
                                     <MenuItem key={subdivision.id} value={subdivision.id}>{subdivision.label} </MenuItem>
                                 ))}
-                                
+
                             </Select>
                         </Grid>
                         <Grid type item xs={12} sm={6} >
                             <InputLabel>Shipping Options</InputLabel>
                             <Select value={shippingOption} fullWidth onChange={(e) => setShippingOption(e.target.value)} >
-                            {optionsArr.map((option) => (
+                                {optionsArr.map((option) => (
                                     <MenuItem key={option.id} value={option.id}>{option.label}</MenuItem>
                                 ))}
-                                
+
                             </Select>
                         </Grid>
                     </Grid>
                 </form>
-                   <br/>
-                     <div style={{display: 'flex', justifyContent:'space-between'}} >
-                         <Button component={Link} to="/cart" variant='outlined'>Back to Cart</Button>
-                         <Button 
-                         onClick={() => onSubmit()}
+                <br />
+                <div style={{ display: 'flex', justifyContent: 'space-between' }} >
+                    <Button component={Link} to="/cart" variant='outlined'>Back to Cart</Button>
+                    <Button
+                        onClick={() => onSubmit()}
                         // onClick={() => nextStep()}
                         // onClick={() => submitForm()}
-                          type="submit" variant='contained' color='primary'>Next Step</Button>
-                         </div>           
+                        type="submit" variant='contained' color='primary'>Next Step</Button>
+                </div>
             </FormProvider>
         </>
     )

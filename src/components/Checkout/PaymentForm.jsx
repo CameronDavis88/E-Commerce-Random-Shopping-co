@@ -33,8 +33,8 @@ const PaymentForm = ({ checkoutToken, shippingData, backStep, onCaptureCheckout,
             line_items: checkoutToken.live.line_items,
 
             customer: {
-                    firstname: shippingData.firstname,
-                    lastname: shippingData.lastname,
+                    firstName: shippingData.firstName,
+                    lastName: shippingData.lastName,
                     email: shippingData.email,
                 },
 
