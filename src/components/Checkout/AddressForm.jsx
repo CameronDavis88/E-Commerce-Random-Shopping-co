@@ -1,17 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { InputLabel, Select, MenuItem, Button, Grid, Typography, TextField } from '@material-ui/core';
-import { useForm, FormProvider, Controller } from 'react-hook-form';
+import { useForm, FormProvider } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 
 import { commerce } from '../../library/commerce';
-import CustomInput from './CustomInput';
-
-
-
 
 const AddressForm = ({ checkoutToken, next, nextStep }) => {
 
-    const { register, getValues, handleSubmit, watch, } = useForm();
+    const { register, handleSubmit } = useForm();
 
     const [shippingCountries, setShippingCountries] = useState([]);
     const [shippingCountry, setShippingCountry] = useState('');
@@ -21,13 +17,6 @@ const AddressForm = ({ checkoutToken, next, nextStep }) => {
     const [shippingOption, setShippingOption] = useState('');
     const methods = useForm();
 
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [address1, setAddress] = useState('');
-    const [email, setEmail] = useState('');
-    const [city, setCity] = useState('');
-    const [zip, setZip] = useState('');
-
     //shippingCountries comes back as an object this turns it into and array of objects each with an id and label key which is the name of country
     const countriesArr = Object.entries(shippingCountries).map(([code, name]) => ({ id: code, label: name }))
     const subdivisionsArr = Object.entries(shippingSubdivisions).map(([code, name]) => ({ id: code, label: name }))
@@ -36,7 +25,6 @@ const AddressForm = ({ checkoutToken, next, nextStep }) => {
 
     const fetchShippingCountries = async function (checkoutTokenId) {
         const { countries } = await commerce.services.localeListShippingCountries(checkoutTokenId);
-        // if(shippingCountries)
         setShippingCountries(countries);
         setShippingCountry(Object.keys(countries)[0]);
         setShippingCountry(Object.keys(countries)[0]);
@@ -44,14 +32,12 @@ const AddressForm = ({ checkoutToken, next, nextStep }) => {
 
     const fetchSubdivisions = async function (countryCode) {
         const { subdivisions } = await commerce.services.localeListSubdivisions(countryCode);
-        // if(subdivisions)
         setShippingSubdivisions(subdivisions);
         setShippingSubdivision(Object.keys(subdivisions)[0]);
     }
 
     const fetchShippingOptions = async function (checkoutTokenId, country, region = null) {
         const options = await commerce.checkout.getShippingOptions(checkoutTokenId, { country, region });
-        // if(options)
         setShippingOptions(options);
         setShippingOption(options[0].id);
     }
@@ -69,63 +55,10 @@ const AddressForm = ({ checkoutToken, next, nextStep }) => {
     }, [shippingSubdivision]);
 
 
-    //This is my Glorious onSubmit that does not work with register etc!!! but it is sending things
-    // const onSubmit = (data) => {
-    //     methods.handleSubmit(
-    //         next({
-    //             ...data,
-    //             shippingCountry,
-    //             shippingSubdivision,
-    //             shippingOption,
-    //             firstName,
-    //             lastName,
-    //             email,
-    //             address1,
-    //             city,
-    //             zip
-    //         })
-    //     );
-    // }
-
     const onSubmit = (data) => {
-        // e.preventDefault();
-
-        // console.log(data, e);
-        // console.log(e)
-        console.log(data)
-        // console.log(watch('firstName'))
-        
-
+        methods.handleSubmit(next({ ...data, shippingCountry, shippingSubdivision, shippingOption }))
     }
-   
-
-    // console.log(watch('firstName'))
-
     const onError = (error) => console.log(error);
-
-
-    // const changeFirstName = (e) => {
-    //     // setFirstName(e.target.value)
-    //     console.log(e.target.value)
-    // }
-
-
-
-
-    // const changeFirstName = (value) => {
-    //     setFirstName(value)
-    // }
-
-    // const thingTester = (thing) => {
-    //     console.log(thing)
-    // }
-
-
-    // const submit = (data) => {
-    //     methods.handleSubmit( next({ ...data, shippingCountry, shippingSubdivision, shippingOption })) 
-    // }
-
-
 
     return (
         //Employing React hook form for all the inputs
@@ -133,81 +66,15 @@ const AddressForm = ({ checkoutToken, next, nextStep }) => {
             <Typography variant='h6' gutterBottom >Shipping Address</Typography>
             <FormProvider {...methods} nextStep={nextStep} >
                 {/* sending an object with the data spread from the input fields with that of the select fields and sending them through the next function from props to state in checkout */}
-                <form
-                    // onSubmit={(data) => onSubmit(data)}
-
-
-                    //  onSubmit={ methods.handleSubmit( (data) =>  next({ ...data, shippingCountry, shippingSubdivision, shippingOption })) }
-
-
-                    // onSubmit={handleSubmit(onSubmit)}
-
-
-                    onSubmit={handleSubmit((data) => onSubmit({ ...data, shippingCountry, shippingSubdivision, shippingOption }), onError)}
-
-
-                // onSubmit={ methods.handleSubmit( (data) => submitForm({ ...data, shippingCountry, shippingSubdivision, shippingOption })) }
-                // onSubmit={ onSubmit((data) => submitForm({ ...data, shippingCountry, shippingSubdivision, shippingOption })) }
-                // onSubmit={ submit((data) => submitForm({ ...data, shippingCountry, shippingSubdivision, shippingOption })) }
-                // onSubmit={handleSubmit((data)=>onSubmit(data))}
-                >
+                <form onSubmit={handleSubmit((data) => onSubmit({ ...data, shippingCountry, shippingSubdivision, shippingOption }), onError)} >
                     <Grid container spacing={3} >
-                       
-                    <Grid xs={12} sm={6} spacing={3}>
 
-                    <TextField   style={{margin: 15}} 
-                    type='text'
-                    name='firstName'
-                    label='First name'
-                    dude='firstDude'
-                    // defaultValue="test"
-                             {...register('firstName', {disabled: false} )}
-                             />
-                    </Grid>
-                    
-
-                        {/* CustomInput is a reusable input component I created using react-hook-form */}
-                        {/* <CustomInput
-                            // value={firstName}
-                            name='firstName'
-                            label='First name'
-                            dude='firstDude'
-                            defaultValue="test"
-                            //  name="example" ref={register}
-
-
-
-                            // onChange={changeFirstName}
-                            // handleChange={(e)=>changeFirstName(e)}
-                            // change={(value) => changeFirstName(value)}
-                            //  handleChange={(value) => changeFirstName(value)}
-                            // onChange={(e) => console.log(e.target.value)}
-
-
-
-                             {...register('firstName', {disabled: false} )}
-
-                        //    getValues={getValues}
-
-                        /> */}
-
-
-                        {/* <Button type='button' onClick={() => {
-                              const bigTestThing = getValues();
-                              console.log(bigTestThing);
-                          }} 
-                          variant='contained' >Button Test for register</Button> */}
-                        <Button  
-                            type='submit' variant='contained'>Test button blah blah</Button>
-
-
-
-                        {/* <CustomInput onChange={e => setLastName(e.target.value)} value={lastName} name='lastName' label='Last name' /> */}
-
-                        {/* <CustomInput onChange={e => setAddress(e.target.value)} value={address1} name='address1' label='Address' />
-                        <CustomInput onChange={e => setEmail(e.target.value)} value={email} name='email' label='Email' />
-                        <CustomInput onChange={e => setCity(e.target.value)} value={city} name='city' label='City' />
-                        <CustomInput onChange={e => setZip(e.target.value)} value={zip} name='zip' label='ZIP code' /> */}
+                        <TextField style={{ margin: 15 }} name='firstName' label='First name'{...register('firstName')} />
+                        <TextField style={{ margin: 15 }} name='lastName' label='Last name'{...register('lastName')} />
+                        <TextField style={{ margin: 15 }} name='email' label='email'{...register('email')} />
+                        <TextField style={{ margin: 15 }} name='address1' label='Address'{...register('address1')} />
+                        <TextField style={{ margin: 15 }} name='city' label='City'{...register('city')} />
+                        <TextField style={{ margin: 15 }} name='zip' label='ZIP code'{...register('zip')} />
 
                         <Grid type item xs={12} sm={6} >
                             <InputLabel>Shipping Country</InputLabel>
@@ -215,38 +82,38 @@ const AddressForm = ({ checkoutToken, next, nextStep }) => {
                                 {countriesArr.map((country) => (
                                     <MenuItem key={country.id} value={country.id}>{country.label}</MenuItem>
                                 ))}
-
                             </Select>
+
                         </Grid>
+
                         <Grid type item xs={12} sm={6} >
                             <InputLabel>Shipping Subdivision</InputLabel>
                             <Select value={shippingSubdivision} fullWidth onChange={(e) => setShippingSubdivision(e.target.value)} >
                                 {subdivisionsArr.map((subdivision) => (
                                     <MenuItem key={subdivision.id} value={subdivision.id}>{subdivision.label} </MenuItem>
                                 ))}
-
                             </Select>
+
                         </Grid>
+
                         <Grid type item xs={12} sm={6} >
                             <InputLabel>Shipping Options</InputLabel>
                             <Select value={shippingOption} fullWidth onChange={(e) => setShippingOption(e.target.value)} >
                                 {optionsArr.map((option) => (
                                     <MenuItem key={option.id} value={option.id}>{option.label}</MenuItem>
                                 ))}
-
                             </Select>
+
                         </Grid>
+
                     </Grid>
+                    <br /><br />
+                    <div style={{ display: 'flex', justifyContent: 'space-between' }} >
+                        <Button component={Link} to="/cart" variant='outlined'>Back to Cart</Button>
+                        <Button
+                            type="submit" variant='contained' color='primary'>Next Step</Button>
+                    </div>
                 </form>
-                <br />
-                <div style={{ display: 'flex', justifyContent: 'space-between' }} >
-                    <Button component={Link} to="/cart" variant='outlined'>Back to Cart</Button>
-                    {/* <Button
-                        // onClick={() => onSubmit()}
-                        // onClick={() => nextStep()}
-                        // onClick={() => submitForm()}
-                        type="submit" variant='contained' color='primary'>Next Step</Button> */}
-                </div>
             </FormProvider>
         </>
     )

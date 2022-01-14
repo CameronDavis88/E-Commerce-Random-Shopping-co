@@ -5,17 +5,10 @@ import { loadStripe } from '@stripe/stripe-js';
 
 import Review from './Review';
 
-// const stripePromise = loadStripe(process.env.STRIPE_PUBLIC_KEY)
 const stripePromise = loadStripe(`${process.env.STRIPE_PUBLIC_KEY}`)
 
 
 const PaymentForm = ({ checkoutToken, shippingData, backStep, onCaptureCheckout, nextStep }) => {
-
-
-
-//    const  testShipData = () => {
-//         console.log('shippingData');
-//    }
 
 
 
