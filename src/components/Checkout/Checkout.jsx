@@ -11,7 +11,6 @@ const steps = ['Shipping address', 'Payment details'];
 const Checkout = ({ cart, error, onCaptureCheckout, order }) => {
     const [activeStep, setActiveStep] = useState(0);
     const [checkoutToken, setCheckoutToken] = useState('');
-    //This is the data from the shipping info sent as an object sent from AddressForm so it can be sent into next step: PaymentForm
     const [shippingData, setShippingData] = useState({});
 
     useEffect(
@@ -22,7 +21,7 @@ const Checkout = ({ cart, error, onCaptureCheckout, order }) => {
                 // console.log(token);
                 setCheckoutToken(token);
             } catch(error) {
-
+                console.log(error)
             }
         }
         // console.log(shippingData)
@@ -47,14 +46,11 @@ const Checkout = ({ cart, error, onCaptureCheckout, order }) => {
 
     }
 
-    const testingProps = () =>'testingProps'
-
     //conditionally rendering the form
-
     const Form = () => (
         activeStep === 0
-            ? <AddressForm checkoutToken={checkoutToken} next={next} nextStep={nextStep} testingProps={testingProps} />
-            : <PaymentForm nextStep={nextStep} checkoutToken={checkoutToken} shippingData={shippingData} backStep={backStep} onCaptureCheckout={onCaptureCheckout} />
+            ? <AddressForm checkoutToken={checkoutToken} next={next} nextStep={nextStep}/>
+            : <PaymentForm error={error} order={order} nextStep={nextStep} checkoutToken={checkoutToken} shippingData={shippingData} backStep={backStep} onCaptureCheckout={onCaptureCheckout} />
     )
 
     return (
