@@ -1,5 +1,5 @@
 import React from 'react';
-import {Grid} from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 
 import Product from '../Product/Product';
 
@@ -9,17 +9,16 @@ import Product from '../Product/Product';
 // ];
 
 const Products = ({ products, addToCart }) => {
-    return(
+    return (
         <main>
-         {products.map(product => 
-                   <Grid key={product.id} >
-                       {/* sending individual objects as it maps through array and sending it to
+            {products.map(product =>
+                <Grid key={product.id} >
+                    {/* sending individual objects as it maps through array and sending it to
                        Product through props */}
-                       <Product product={product} addToCart={addToCart}/>
-                   </Grid>
+                    <Product product={product} addToCart={addToCart} />
+                </Grid>
             )}
-     
-    </main>
+        </main>
     )
 }
 

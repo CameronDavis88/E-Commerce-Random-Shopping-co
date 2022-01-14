@@ -12,21 +12,20 @@ const NavBar = ({ totalItemsInCart }) => {
         <div className='navBar'>
             <AppBar>
                 <Toolbar>
-                    <Typography component={Link} to="/" >
+                    <Typography component={Link} to="/">
                         {/* <img src={} alt="Commerce.js" />  I don't have an image yet */}
                         --Brand name label here--
                     </Typography>
                     <div className='spaceMaker' />
                     {location.pathname === "/" && (
                         <div>
-                            <IconButton component={Link} to="/cart" >
-                                <Badge badgeContent={totalItemsInCart} >
+                            <IconButton component={Link} to="/cart">
+                                <Badge badgeContent={totalItemsInCart}>
                                     <ShoppingCart />
                                 </Badge>
                             </IconButton>
                         </div>
                     )}
-
                 </Toolbar>
             </AppBar>
         </div>

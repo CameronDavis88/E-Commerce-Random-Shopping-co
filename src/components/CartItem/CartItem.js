@@ -5,8 +5,7 @@ const CartItem = ({ item, updateCartQty, removeFromCart }) => {
     const { name, image, price, quantity, id } = item;
     return (
         <Card>
-           
-            <CardMedia   alt={name}  >
+            <CardMedia alt={name} >
                 <img src={image.url} className='cartItemImage' alt={name}/>
             </CardMedia>
             <CardContent >

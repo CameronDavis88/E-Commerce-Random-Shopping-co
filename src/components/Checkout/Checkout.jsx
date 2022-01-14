@@ -67,12 +67,8 @@ const Checkout = ({ cart, error, onCaptureCheckout, order }) => {
                     )}
                 </Stepper>
 
-                
-                
     {/* If it is in the last step display the Confirmation Form for review if not display From if token was returned*/}
-                
                 {activeStep === steps.length ? <ConfirmationForm  /> : checkoutToken && <Form /> }
-
             </main>
         </>
     )
