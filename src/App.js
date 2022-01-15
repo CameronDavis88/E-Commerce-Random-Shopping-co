@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { commerce } from './library/commerce';
-import { Products, NavBar, Cart, Checkout } from './components';
-// import Review from './components/Checkout/Review';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 // import { Repeat } from '@material-ui/icons';
+
+import { Products, NavBar, Cart, Checkout } from './components';
+// import Review from './components/Checkout/Review';
 
 const App = () => {
     // React Hook States
     const [products, setProducts] = useState([]);
-    // const [cart, setCart] = useState({});
-    // I did not fully understand why, but the hook below works when the one above did not--something to do with when things first render and cart not returning and thus no line_items etc.
-    const [cart, setCart] = useState({ line_items: [] });
+    const [cart, setCart] = useState({});
+    // const [cart, setCart] = useState({ line_items: [] });
     const [order, setOrder] = useState({});
     const [errorMessage, setErrorMessage] = useState('');
 
@@ -50,9 +50,9 @@ const App = () => {
         setCart(newCart);
     }
 
-    const handleCaptureCheckout = async function (checkoutTokenId, newOrder) {
+    const handleCaptureCheckout = async function (checkoutTokenId, data) {
         try {
-            const incomingOrder = await commerce.checkout.capture(checkoutTokenId, newOrder);
+            const incomingOrder = await commerce.checkout.capture(checkoutTokenId, data);
             setOrder(incomingOrder);
             refreshCart();
         } catch (error) {
@@ -64,6 +64,7 @@ const App = () => {
     useEffect(() => {
         fetchProducts();
         fetchCart();
+        // console.log(order);
     }, []);
 
     return (
@@ -91,7 +92,6 @@ const App = () => {
                 </Switch>
             </div>
         </Router>
-
     )
 }
 

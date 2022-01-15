@@ -44,6 +44,9 @@ const AddressForm = ({ checkoutToken, next, nextStep }) => {
 
     useEffect(() => {
         fetchShippingCountries(checkoutToken.id)
+        console.log(checkoutToken.live)
+
+        
     }, []);
 
     useEffect(() => {
@@ -110,8 +113,7 @@ const AddressForm = ({ checkoutToken, next, nextStep }) => {
                     <br /><br />
                     <div style={{ display: 'flex', justifyContent: 'space-between' }} >
                         <Button component={Link} to="/cart" variant='outlined'>Back to Cart</Button>
-                        <Button
-                            type="submit" variant='contained' color='primary'>Next Step</Button>
+                        <Button type="submit" variant='contained' color='primary'>Next Step</Button>
                     </div>
                 </form>
             </FormProvider>

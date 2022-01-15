@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import CartItem from '../CartItem/CartItem';
 
 const Cart = ({ cart, updateCartQty, emptyCart, removeFromCart }) => {
-    console.log(cart)
+    // console.log(cart)
     const isEmpty = !cart.line_items.length;
 
     const EmptyCart = () => {

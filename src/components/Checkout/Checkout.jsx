@@ -15,7 +15,7 @@ const Checkout = ({ cart, error, onCaptureCheckout, order }) => {
     const [shippingData, setShippingData] = useState({});
 
     useEffect(() => {
-        console.log(cart)
+        // console.log(cart)
         console.log(order)
     }, [])
 
@@ -45,8 +45,7 @@ const Checkout = ({ cart, error, onCaptureCheckout, order }) => {
         nextStep();
     }
 
-    let ConfirmationForm = () => (
-    // order.customer ? (
+    let ConfirmationForm = () =>  order.customer ? (
             <>
             <div>
                 <Typography variant='h5' >Success! Thank you for your purchase, {shippingData.firstName} {shippingData.lastName}!</Typography>
@@ -56,20 +55,19 @@ const Checkout = ({ cart, error, onCaptureCheckout, order }) => {
             <br/>
             <Button component={Link} to="/" variant='outlined' type='button'></Button>
             </>
-    ) 
-    // : (
-    //     <div>
-    //         <CircularProgress  />
-    //     </div>
-    // );
+    ) : (
+        <div>
+            <CircularProgress  />
+        </div>
+    );
 
-    // if(error){
-    //     <>
-    //     <Typography variant='h5' >Error: {error}</Typography>
-    //     <br/>
-    //     <Button component={Link} to="/" variant='outlined' type='button'></Button>
-    //     </>
-    // }
+    if(error){
+        <>
+        <Typography variant='h5' >Error: {error}</Typography>
+        <br/>
+        <Button component={Link} to="/" variant='outlined' type='button'></Button>
+        </>
+    }
 
     //conditionally rendering the form
     const Form = () => (
