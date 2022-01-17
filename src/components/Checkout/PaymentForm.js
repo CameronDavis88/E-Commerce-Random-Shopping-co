@@ -88,14 +88,6 @@
 
 
 
-// billing.name: The Billing contact name field is required when customer.id is not present.
-// index.js:1 billing.street: The Billing street address field is required when customer.id is not present.
-// index.js:1 billing.town_city: The Billing town/city field is required when customer.id is not present.
-// index.js:1 billing.postal_zip_code: The Billing postal/ZIP code field is required when customer.id is not present.
-// index.js:1 billing.county_state: The Billing county/state/province field is required when customer.id is not present.
-// index.js:1 billing.country: The Billing country field is required when customer.id is not present.
-// index.js:1 payment.gateway: The selected payment.gateway is invalid.
-
 
 
 import React from 'react';
@@ -189,14 +181,20 @@ const PaymentForm = ({ checkoutToken, nextStep, backStep, shippingData, onCaptur
             <Review checkoutToken={checkoutToken} />
             <Divider />
             <Typography variant="h6" gutterBottom style={{ margin: '20px 0' }}>Payment method</Typography>
+            <Typography variant='subtitle2' >
+                    * This is for demo purposes only, no real transaction will occur *
+                </Typography>
+
             <Elements stripe={stripePromise}>
                 <ElementsConsumer>{({ elements, stripe }) => (
                     <form onSubmit={(e) => handleSubmit(e, elements, stripe)}>
                         <CardElement />
                         <br /> <br />
                         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                            <Button variant="outlined" onClick={backStep}>Back</Button>
-                            <Button type="submit" variant="contained" disabled={!stripe} color="primary">
+                            <Button variant="outlined" onClick={() => backStep()}>Back</Button>
+                            {/* I changed the button type from submit to button with an onClick to send a notification because
+                            for the life of me I could not get the form to connect and the final payment to go through... */}
+                            <Button type="button" onClick={() => nextStep()} variant="contained" color="primary">
                                 Pay {checkoutToken.live.subtotal.formatted_with_symbol}
                             </Button>
                         </div>

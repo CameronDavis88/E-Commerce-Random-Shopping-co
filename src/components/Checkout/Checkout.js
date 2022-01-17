@@ -45,29 +45,32 @@ const Checkout = ({ cart, error, onCaptureCheckout, order }) => {
         nextStep();
     }
 
-    let ConfirmationForm = () =>  order.customer ? (
+    let ConfirmationForm = () => 
+    //  order.customer ? (
             <>
             <div>
-                <Typography variant='h5' >Success! Thank you for your purchase, {shippingData.firstName} {shippingData.lastName}!</Typography>
+                <Typography variant='h5' >Thank you for your purchase, {shippingData.firstName} {shippingData.lastName}!</Typography>
                 <Divider />
-                <Typography variant='subtitle2' >Order ref : ref</Typography>
+                <Typography variant='subtitle2' >
+                    *Don't worry, transaction did not actually occur.
+                </Typography>
             </div>
             <br/>
-            <Button component={Link} to="/" variant='outlined' type='button'></Button>
+            <Button component={Link} to="/" variant='outlined' type='button'>Return to Home Page?</Button>
             </>
-    ) : (
-        <div>
-            <CircularProgress  />
-        </div>
-    );
+    // ) : (
+    //     <div>
+    //         <CircularProgress  />
+    //     </div>
+    // );
 
-    if(error){
-        <>
-        <Typography variant='h5' >Error: {error}</Typography>
-        <br/>
-        <Button component={Link} to="/" variant='outlined' type='button'></Button>
-        </>
-    }
+    // if(error){
+        // <>
+        // <Typography variant='h5' >Error: {error}</Typography>
+        // <br/>
+        // <Button component={Link} to="/" variant='outlined' type='button'></Button>
+        // </>
+    
 
     //conditionally rendering the form
     const Form = () => (
