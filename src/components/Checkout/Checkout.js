@@ -9,7 +9,7 @@ import { commerce } from '../../library/commerce';
 
 const steps = ['Shipping address', 'Payment details'];
 
-const Checkout = ({ cart, error, onCaptureCheckout, order }) => {
+const Checkout = ({ cart, error, onCaptureCheckout, order, refreshCart }) => {
     const [activeStep, setActiveStep] = useState(0);
     const [checkoutToken, setCheckoutToken] = useState('');
     const [shippingData, setShippingData] = useState({});
@@ -56,8 +56,9 @@ const Checkout = ({ cart, error, onCaptureCheckout, order }) => {
                 </Typography>
             </div>
             <br/>
-            <Button component={Link} to="/" variant='outlined' type='button'>Return to Home Page?</Button>
+            <Button component={Link} to="/" variant='outlined' type='button'>Return to Home Page</Button>
             </>
+            //This conditional rendering was commented out to allow confirmation page to be rendered without actual order going through
     // ) : (
     //     <div>
     //         <CircularProgress  />
@@ -76,7 +77,7 @@ const Checkout = ({ cart, error, onCaptureCheckout, order }) => {
     const Form = () => (
         activeStep === 0
             ? <AddressForm checkoutToken={checkoutToken} next={next} nextStep={nextStep}/>
-            : <PaymentForm error={error} order={order} nextStep={nextStep} checkoutToken={checkoutToken} shippingData={shippingData} backStep={backStep} onCaptureCheckout={onCaptureCheckout} />
+            : <PaymentForm refreshCart={refreshCart} error={error} order={order} nextStep={nextStep} checkoutToken={checkoutToken} shippingData={shippingData} backStep={backStep} onCaptureCheckout={onCaptureCheckout} />
     )
 
     return (

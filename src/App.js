@@ -85,6 +85,7 @@ const App = () => {
                     <Route exact path="/checkout">
                         <Checkout cart={cart}
                             order={order}
+                            refreshCart={refreshCart}
                             onCaptureCheckout={handleCaptureCheckout}
                             error={errorMessage}
                         />

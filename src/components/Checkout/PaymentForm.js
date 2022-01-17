@@ -99,7 +99,7 @@ import Review from './Review';
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
 
-const PaymentForm = ({ checkoutToken, nextStep, backStep, shippingData, onCaptureCheckout }) => {
+const PaymentForm = ({ checkoutToken, nextStep, refreshCart, backStep, shippingData, onCaptureCheckout }) => {
 
 
     const handleSubmit = async (event, elements, stripe) => {
@@ -176,6 +176,12 @@ const PaymentForm = ({ checkoutToken, nextStep, backStep, shippingData, onCaptur
         }
     };
 
+    const finalStep = () => {
+        nextStep();
+        handleSubmit();
+        refreshCart();
+    }
+
     return (
         <>
             <Review checkoutToken={checkoutToken} />
@@ -194,7 +200,7 @@ const PaymentForm = ({ checkoutToken, nextStep, backStep, shippingData, onCaptur
                             <Button variant="outlined" onClick={() => backStep()}>Back</Button>
                             {/* I changed the button type from submit to button with an onClick to send a notification because
                             for the life of me I could not get the form to connect and the final payment to go through... */}
-                            <Button type="button" onClick={() => nextStep()} variant="contained" color="primary">
+                            <Button type="button" onClick={() => finalStep()} variant="contained" color="primary">
                                 Pay {checkoutToken.live.subtotal.formatted_with_symbol}
                             </Button>
                         </div>
