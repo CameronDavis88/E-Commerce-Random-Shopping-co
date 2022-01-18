@@ -11,26 +11,20 @@ const Product = ({ product, addToCart }) => {
     const { name, price, image, description, id } = product;
 
     return (
-        <Card
-        className={classes.root}
-        >
+        <Card className={classes.root}>
             <CardMedia
-                className={classes.image}
+                className={classes.media}
                 image={image}
-                title={name} />
+                title={name}/>
             <CardContent>
-                <div
-                    // className={cardContent} 
-                    >
+                <div className={classes.cardContent}>
                     <Typography variant='h5' gutterBottom> {name} </Typography >
                     <img className='item-image' src={image.url} alt={name} />
                     <Typography variant='h5' > {price.formatted_with_symbol} </Typography>
                     <Typography variant='h4' color='textSecondary' dangerouslySetInnerHTML={{ __html: description }} />
                 </div>
             </CardContent>
-            <CardActions disableSpacing
-                // className={cardActions}
-                 >
+            <CardActions disableSpacing className={classes.cardActions}>
                 <IconButton aria-label='Add to Cart' onClick={() => addToCart(id, 1)} >
                     <AddShoppingCart/>
                 </IconButton>
