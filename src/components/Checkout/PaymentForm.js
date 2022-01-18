@@ -49,28 +49,26 @@ const PaymentForm = ({ checkoutToken, nextStep, refreshCart, backStep, shippingD
                       payment_intent_id: paymentMethod.id,
                     },
                   },
-                pay_what_you_want: checkoutToken.live.subtotal.formatted
+                pay_what_you_want: `${checkoutToken.live.subtotal.formatted}`
             }
+
             onCaptureCheckout(checkoutToken.id, orderData);
             nextStep();
+            refreshCart();
         }
     };
-
-    const finalStep = () => {
-        nextStep();
-        handleSubmit();
-        refreshCart();
-    }
 
     return (
         <>
             <Review checkoutToken={checkoutToken} />
             <Divider />
             <Typography variant="h6" gutterBottom style={{ margin: '20px 0' }}>Payment method</Typography>
-            <Typography variant='subtitle2' >
-                    * This is for demo purposes only, no real transaction will occur *
+            <Typography variant='h6' >
+                    *For demo purposes only!
                 </Typography>
-
+                <Typography variant='subtitle1' >
+                    Please use: 4242-4242-4242-4242 (04/24) (424) (42424)
+                </Typography>
             <Elements stripe={stripePromise}>
                 <ElementsConsumer>{({ elements, stripe }) => (
                     <form onSubmit={(e) => handleSubmit(e, elements, stripe)}>
@@ -78,9 +76,7 @@ const PaymentForm = ({ checkoutToken, nextStep, refreshCart, backStep, shippingD
                         <br /> <br />
                         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                             <Button variant="outlined" onClick={() => backStep()}>Back</Button>
-                            {/* I changed the button type from submit to button with an onClick to send a notification because
-                            for the life of me I could not get the form to connect and the final payment to go through... */}
-                            <Button type="button" onClick={() => finalStep()} variant="contained" color="primary">
+                            <Button type='submit' variant="contained" color="primary">
                                 Pay {checkoutToken.live.subtotal.formatted_with_symbol}
                             </Button>
                         </div>

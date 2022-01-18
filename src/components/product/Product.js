@@ -17,9 +17,7 @@ const Product = ({ product, addToCart }) => {
                 image={image}
                 title={name}/>
             <CardContent >
-                <div
-                //  className={classes.cardContent}
-                 >
+                <div>
                     <Typography variant='h5' gutterBottom component='h2' > {name} </Typography >
                     <img className='item-image' src={image.url} alt={name} />
                     <Typography variant='h5' component='h2' > {price.formatted_with_symbol} </Typography>

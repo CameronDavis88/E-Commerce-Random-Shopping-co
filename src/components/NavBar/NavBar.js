@@ -1,12 +1,9 @@
 import React from 'react';
 import { AppBar, Toolbar, IconButton, Badge, MenuItem, Menu, Typography } from '@material-ui/core';
-import { CallMissedSharp, ShoppingCart } from '@material-ui/icons';
+import { ShoppingCart } from '@material-ui/icons';
 import { Link, useLocation } from 'react-router-dom';
 import useStyles from './styles';
 import logo from '../../images/logo.png';
-import { mergeClasses } from '@material-ui/styles';
-
-
 
 const NavBar = ({ totalItemsInCart }) => {
     const location = useLocation();
@@ -14,17 +11,17 @@ const NavBar = ({ totalItemsInCart }) => {
 
     return (
         <div className='navBar'>
-            <AppBar position='fixed' color='inherit' className={classes.appBar} >
+            <AppBar position='fixed' color='primary' className={classes.appBar} >
                 <Toolbar>
                     <Typography component={Link} to="/" variant='h6' color='inherit' className='classes.title'>
-                        <img  src={logo} alt="treeLogo" height='20px' />  
-                        Matonious Commerce
+                        <img  src={logo} alt="logo" height='20px' />  
+                        The Random Shopping Co.
                     </Typography>
                     <div className='spaceMaker' />
                     {location.pathname === "/" && (
                         <div>
                             <IconButton component={Link} to="/cart">
-                                <Badge badgeContent={totalItemsInCart}>
+                                <Badge badgeContent={totalItemsInCart} color='secondary'>
                                     <ShoppingCart />
                                 </Badge>
                             </IconButton>
