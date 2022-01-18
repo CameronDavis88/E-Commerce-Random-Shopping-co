@@ -11,17 +11,19 @@ const Product = ({ product, addToCart }) => {
     const { name, price, image, description, id } = product;
 
     return (
-        <Card className={classes.root}>
+        <Card className={classes.root} >
             <CardMedia
                 className={classes.media}
                 image={image}
                 title={name}/>
-            <CardContent>
-                <div className={classes.cardContent}>
-                    <Typography variant='h5' gutterBottom> {name} </Typography >
+            <CardContent >
+                <div
+                //  className={classes.cardContent}
+                 >
+                    <Typography variant='h5' gutterBottom component='h2' > {name} </Typography >
                     <img className='item-image' src={image.url} alt={name} />
-                    <Typography variant='h5' > {price.formatted_with_symbol} </Typography>
-                    <Typography variant='h4' color='textSecondary' dangerouslySetInnerHTML={{ __html: description }} />
+                    <Typography variant='h5' component='h2' > {price.formatted_with_symbol} </Typography>
+                    <Typography variant="body2" color="textSecondary" component="p" dangerouslySetInnerHTML={{ __html: description }} />
                 </div>
             </CardContent>
             <CardActions disableSpacing className={classes.cardActions}>
