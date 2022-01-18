@@ -11,13 +11,14 @@ import Product from '../Product/Product';
 const Products = ({ products, addToCart }) => {
     return (
         <main>
-            {products.map(product =>
-                <Grid key={product.id} >
-                    {/* sending individual objects as it maps through array and sending it to
-                       Product through props */}
-                    <Product product={product} addToCart={addToCart} />
-                </Grid>
-            )}
+            <Grid container justify='center' spacing={4} >
+                {products.map(product =>
+                    <Grid key={product.id} item xs={12} sm={4} lg={3} >
+                        <Product product={product} addToCart={addToCart} />
+                    </Grid>
+                )}
+            </Grid>
+
         </main>
     )
 }
