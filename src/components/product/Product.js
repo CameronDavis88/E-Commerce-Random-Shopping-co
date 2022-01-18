@@ -9,14 +9,13 @@ const Product = ({ product, addToCart }) => {
 
     // destructuring properties from product from props which is per object as it is mapped in Products
     const { name, price, image, description, id } = product;
-    // console.log(product);
 
     return (
         <Card
         // className={classes.root}
         >
             <CardMedia
-                // className={classes.media}
+                // className={classes.image}
                 image={image}
                 title={name} />
             <CardContent>

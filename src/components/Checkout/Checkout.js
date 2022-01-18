@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Paper, Stepper, Step, StepLabel, Typography, CircularProgress, Divider, Button } from '@material-ui/core';
 import { Link } from 'react-router-dom';
-
 import AddressForm from './AddressForm';
 import PaymentForm from './PaymentForm';
 import { commerce } from '../../library/commerce';
-// import Review from './Review';
 
 const steps = ['Shipping address', 'Payment details'];
 
@@ -15,7 +13,6 @@ const Checkout = ({ cart, error, onCaptureCheckout, order, refreshCart }) => {
     const [shippingData, setShippingData] = useState({});
 
     useEffect(() => {
-        // console.log(cart)
         console.log(order)
     }, [])
 
@@ -24,13 +21,11 @@ const Checkout = ({ cart, error, onCaptureCheckout, order, refreshCart }) => {
         const generateToken = async function(){
             try{
                 const token = await commerce.checkout.generateToken(cart.id, { type:'cart' });
-                // console.log(token);
                 setCheckoutToken(token);
             } catch(error) {
                 console.log(error)
             }
         }
-        // console.log(shippingData)
         generateToken();
     }, [cart]);
 

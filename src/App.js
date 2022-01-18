@@ -1,16 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { commerce } from './library/commerce';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-// import { Repeat } from '@material-ui/icons';
-
 import { Products, NavBar, Cart, Checkout } from './components';
-// import Review from './components/Checkout/Review';
 
 const App = () => {
     // React Hook States
     const [products, setProducts] = useState([]);
     const [cart, setCart] = useState({});
-    // const [cart, setCart] = useState({ line_items: [] });
     const [order, setOrder] = useState({});
     const [errorMessage, setErrorMessage] = useState('');
 
@@ -27,7 +23,6 @@ const App = () => {
     const onAddToCart = async function (productId, quantity) {
         const { cart } = await commerce.cart.add(productId, quantity);
         setCart(cart);
-        // console.log(cart.line_items)
     }
 
     const updateCartQty = async function (productId, quantity) {
@@ -64,7 +59,6 @@ const App = () => {
     useEffect(() => {
         fetchProducts();
         fetchCart();
-        // console.log(order);
     }, []);
 
     return (

@@ -1,7 +1,6 @@
 import React from 'react';
 import { Container, Typography, Button, Grid } from '@material-ui/core';
 import { Link } from 'react-router-dom';
-
 import CartItem from '../CartItem/CartItem';
 
 const Cart = ({ cart, updateCartQty, emptyCart, removeFromCart }) => {
@@ -23,7 +22,6 @@ const Cart = ({ cart, updateCartQty, emptyCart, removeFromCart }) => {
                 <Grid container spacing={3}>
                     {cart.line_items.map((item) => (
                         <Grid item xs={12} sm={4} key={item.id}>
-                            {/* <div>{item.quantity} {item.name} {item.price.formatted_with_symbol} </div> */}
                             <CartItem item={item} updateCartQty={updateCartQty} removeFromCart={removeFromCart} />
                         </Grid>
                     ))}
