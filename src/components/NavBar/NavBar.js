@@ -1,20 +1,27 @@
 import React from 'react';
 import { AppBar, Toolbar, IconButton, Badge, MenuItem, Menu, Typography } from '@material-ui/core';
-import { ShoppingCart } from '@material-ui/icons';
+import { CallMissedSharp, ShoppingCart } from '@material-ui/icons';
 import { Link, useLocation } from 'react-router-dom';
 import './NavBar.css'
+import logo from '../../images/logo.png';
+import { mergeClasses } from '@material-ui/styles';
+
+
 
 const NavBar = ({ totalItemsInCart }) => {
-    // console.log(totalItemsInCart)
     const location = useLocation();
 
     return (
         <div className='navBar'>
-            <AppBar>
+            <AppBar position='fixed' color='inherit'
+            // className={classes.appBar}
+            >
                 <Toolbar>
-                    <Typography component={Link} to="/">
-                        {/* <img src={} alt="Commerce.js" />  I don't have an image yet */}
-                        --Brand name label here--
+                    <Typography component={Link} to="/" variant='h6' color='inherit'
+                    //  className='classes.title' 
+                     >
+                        <img  src={logo} alt="treeLogo" height='20px' />  
+                        Matonious Commerce
                     </Typography>
                     <div className='spaceMaker' />
                     {location.pathname === "/" && (
