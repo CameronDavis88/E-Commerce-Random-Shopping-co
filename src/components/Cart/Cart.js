@@ -28,7 +28,7 @@ const Cart = ({ cart, updateCartQty, emptyCart, removeFromCart }) => {
                     ))}
                 </Grid>
                 <div>
-                    <Typography variant='h4'>
+                    <Typography variant='h4' >
                         Subtotal: {cart.subtotal.formatted_with_symbol}
                         <div>
                             <Button className={classes.emptyButton} onClick={emptyCart} size='large' type='button' variant='contained' color='secondary'>Empty Cart</Button>

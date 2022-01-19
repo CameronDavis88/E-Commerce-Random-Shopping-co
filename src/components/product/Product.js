@@ -11,6 +11,7 @@ const Product = ({ product, addToCart }) => {
     const { name, price, image, description, id } = product;
 
     return (
+        <div className={classes.box} >
         <Card className={classes.root} >
             <CardMedia
                 className={classes.media}
@@ -30,6 +31,7 @@ const Product = ({ product, addToCart }) => {
                 </IconButton>
             </CardActions>
         </Card>
+        </div>
     )
 }
 
