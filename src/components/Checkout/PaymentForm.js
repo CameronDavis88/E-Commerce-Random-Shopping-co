@@ -63,20 +63,20 @@ const PaymentForm = ({ checkoutToken, nextStep, refreshCart, backStep, shippingD
 
     return (
         <>
-            <Review checkoutToken={checkoutToken} />
+            <Review checkoutToken={checkoutToken}/>
             <Divider />
             <Typography variant="h6" gutterBottom style={{ margin: '20px 0' }}>Payment method</Typography>
             <Typography variant='h6' >
                 *For demo purposes only!
             </Typography>
-            <Typography variant='subtitle1' >
-                Please use: 4242-4242-4242-4242 (04/24) (424) (42424)
+            <Typography variant='subtitle1'>
+                Please use:   4242-4242-4242-4242 (04/24) (424) (42424)
             </Typography>
-            <Elements stripe={stripePromise}>
-                <ElementsConsumer>{({ elements, stripe }) => (
+            <Elements stripe={stripePromise} stripePromise={stripePromise}  >
+                <ElementsConsumer stripe={stripePromise} stripePromise={stripePromise} >{({ elements, stripe }) => (
                     <form onSubmit={(e) => handleSubmit(e, elements, stripe)}>
-                        <CardElement />
-                        <br /> <br />
+                        <CardElement stripe={stripePromise}stripePromise={stripePromise}/>
+                        <br/> 
                         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                             <Button variant="outlined" onClick={() => backStep()}>Back</Button>
                             <Button type='submit' variant="contained" color="primary">

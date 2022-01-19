@@ -56,18 +56,21 @@ const Checkout = ({ cart, error, onCaptureCheckout, order, refreshCart }) => {
     //conditionally rendering the form
     const Form = () => (
         activeStep === 0
-            ? <AddressForm checkoutToken={checkoutToken} next={next} nextStep={nextStep} />
-            : <PaymentForm refreshCart={refreshCart} error={error} order={order} nextStep={nextStep} checkoutToken={checkoutToken} shippingData={shippingData} backStep={backStep} onCaptureCheckout={onCaptureCheckout} />
+            ? <AddressForm checkoutToken={checkoutToken} next={next} nextStep={nextStep}/>
+            : <PaymentForm 
+            refreshCart={refreshCart} error={error} order={order} nextStep={nextStep} checkoutToken={checkoutToken} 
+            shippingData={shippingData} backStep={backStep} onCaptureCheckout={onCaptureCheckout}
+              />
     );
 
     return (
         <>
-            <CssBaseline />
-            <div className={classes.toolbar} />
+            {/* <CssBaseline /> */}
+            {/* <div className={classes.toolbar} /> */}
             <main className={classes.layout} >
-                <Paper className={classes.paper} />
+                {/* <Paper className={classes.paper} /> */}
                 <Typography variant='h4' align='center' >Checkout</Typography>
-                <Stepper activeStep={0} className={classes.stepper} >
+                <Stepper activeStep={0} className={classes.stepper}>
                     {steps.map(step => (
                         <Step key={step} >
                             <StepLabel>{step}</StepLabel>
@@ -76,7 +79,7 @@ const Checkout = ({ cart, error, onCaptureCheckout, order, refreshCart }) => {
                     )}
                 </Stepper>
                 {/* If it is in the last step display the Confirmation Form for review if not display From if token was returned*/}
-                {activeStep === steps.length ? <ConfirmationForm /> : checkoutToken && <Form />}
+                {activeStep === steps.length ? <ConfirmationForm/> : checkoutToken && <Form/>}
             </main>
         </>
     )

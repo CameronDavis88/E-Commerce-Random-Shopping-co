@@ -64,10 +64,10 @@ const App = () => {
     return (
         <Router>
             <div>
-                <NavBar totalItemsInCart={cart.total_items} />
+                <NavBar totalItemsInCart={cart.total_items}/>
                 <Switch>
-                    <Route exact path="/" >
-                        <Products products={products} cart={cart} addToCart={onAddToCart} />
+                    <Route exact path="/">
+                        <Products products={products} cart={cart} addToCart={onAddToCart}/>
                     </Route>
                     <Route path="/cart">
                         <Cart cart={cart}

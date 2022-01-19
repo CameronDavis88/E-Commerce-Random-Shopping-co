@@ -11,22 +11,22 @@ const Product = ({ product, addToCart }) => {
     const { name, price, image, description, id } = product;
 
     return (
-        <div className={classes.box} >
-        <Card className={classes.root} >
+        <div className={classes.box}>
+        <Card className={classes.root}>
             <CardMedia
                 className={classes.media}
                 image={image}
                 title={name}/>
-            <CardContent >
+            <CardContent>
                 <div>
-                    <Typography variant='h5' gutterBottom component='h2' > {name} </Typography >
-                    <img className='item-image' src={image.url} alt={name} />
-                    <Typography variant='h5' component='h2' > {price.formatted_with_symbol} </Typography>
-                    <Typography variant="body2" color="textSecondary" component="p" dangerouslySetInnerHTML={{ __html: description }} />
+                    <Typography variant='h5' gutterBottom component='h2'> {name} </Typography>
+                    <img className='item-image' src={image.url} alt={name}/>
+                    <Typography variant='h5' component='h2'>{price.formatted_with_symbol}</Typography>
+                    <Typography variant="body2" color="textSecondary" component="p" dangerouslySetInnerHTML={{ __html: description }}/>
                 </div>
             </CardContent>
             <CardActions disableSpacing className={classes.cardActions}>
-                <IconButton aria-label='Add to Cart' onClick={() => addToCart(id, 1)} >
+                <IconButton aria-label='Add to Cart' onClick={() => addToCart(id, 1)}>
                     <AddShoppingCart/>
                 </IconButton>
             </CardActions>

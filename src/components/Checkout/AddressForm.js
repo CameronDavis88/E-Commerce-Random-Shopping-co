@@ -63,7 +63,7 @@ const AddressForm = ({ checkoutToken, next, nextStep }) => {
             <Typography variant='h6' gutterBottom >Shipping Address</Typography>
             <FormProvider {...methods} nextStep={nextStep} >
                 {/* sending an object with the data spread from the input fields with that of the select fields and sending them through the next function from props to state in checkout */}
-                <form onSubmit={handleSubmit((data) => onSubmit({ ...data, shippingCountry, shippingSubdivision, shippingOption }), onError)} >
+                <form onSubmit={handleSubmit((data) => onSubmit({ ...data, shippingCountry, shippingSubdivision, shippingOption }), onError)}>
                     <Grid container spacing={3} >
                         <TextField required style={{ margin: 15 }} name='firstName' label='First name'{...register('firstName')} defaultValue={''}/>
                         <TextField required style={{ margin: 15 }} name='lastName' label='Last name'{...register('lastName')} defaultValue={''}/>
@@ -71,34 +71,33 @@ const AddressForm = ({ checkoutToken, next, nextStep }) => {
                         <TextField required style={{ margin: 15 }} name='address1' label='Address'{...register('address1')} defaultValue={''}/>
                         <TextField required style={{ margin: 15 }} name='city' label='City'{...register('city')} defaultValue={''}/>
                         <TextField required style={{ margin: 15 }} name='zip' label='ZIP code'{...register('zip')} defaultValue={''}/>
-                        <Grid type item xs={12} sm={6} >
+                        <Grid type item xs={12} sm={6}>
                             <InputLabel>Shipping Country</InputLabel>
-                            <Select value={shippingCountry} fullWidth onChange={(e) => setShippingCountry(e.target.value)} >
+                            <Select value={shippingCountry} fullWidth onChange={(e) => setShippingCountry(e.target.value)}>
                                 {countriesArr.map((country) => (
                                     <MenuItem key={country.id} value={country.id}>{country.label}</MenuItem>
                                 ))}
                             </Select>
-
                         </Grid>
-                        <Grid type item xs={12} sm={6} >
+                        <Grid type item xs={12} sm={6}>
                             <InputLabel>Shipping Subdivision</InputLabel>
-                            <Select value={shippingSubdivision} fullWidth onChange={(e) => setShippingSubdivision(e.target.value)} >
+                            <Select value={shippingSubdivision} fullWidth onChange={(e) => setShippingSubdivision(e.target.value)}>
                                 {subdivisionsArr.map((subdivision) => (
                                     <MenuItem key={subdivision.id} value={subdivision.id}>{subdivision.label} </MenuItem>
                                 ))}
                             </Select>
                         </Grid>
-                        <Grid type item xs={12} sm={6} >
+                        <Grid type item xs={12} sm={6}>
                             <InputLabel>Shipping Options</InputLabel>
-                            <Select value={shippingOption} fullWidth onChange={(e) => setShippingOption(e.target.value)} >
+                            <Select value={shippingOption} fullWidth onChange={(e) => setShippingOption(e.target.value)}>
                                 {optionsArr.map((option) => (
                                     <MenuItem key={option.id} value={option.id}>{option.label}</MenuItem>
                                 ))}
                             </Select>
                         </Grid>
                     </Grid>
-                    <br /><br />
-                    <div style={{ display: 'flex', justifyContent: 'space-between' }} >
+                    <br /><br/>
+                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                         <Button component={Link} to="/cart" variant='outlined'>Back to Cart</Button>
                         <Button type="submit" variant='contained' color='primary'>Next Step</Button>
                     </div>
