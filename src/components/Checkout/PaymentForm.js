@@ -39,16 +39,19 @@ const PaymentForm = ({ checkoutToken, nextStep, refreshCart, backStep, shippingD
                     name: shippingData.firstName,
                     street: shippingData.address1,
                     town_city: shippingData.city,
-                    county_state:  shippingData.shippingSubdivision,
+                    county_state: shippingData.shippingSubdivision,
                     postal_zip_code: shippingData.zip,
                     country: shippingData.shippingCountry
                 },
                 payment: {
                     gateway: 'stripe',
                     stripe: {
-                      payment_intent_id: paymentMethod.id,
+                        //   payment_intent_id: paymentMethod.id,
+                        payment_method_id: paymentMethod.id,
                     },
-                  },
+                },
+                //I don't know what is wrong here, the error message says this below is invalid
+                //but when I console.log() it it is exactly what the documentation calls for...
                 pay_what_you_want: `${checkoutToken.live.subtotal.formatted}`
             }
 
@@ -64,11 +67,11 @@ const PaymentForm = ({ checkoutToken, nextStep, refreshCart, backStep, shippingD
             <Divider />
             <Typography variant="h6" gutterBottom style={{ margin: '20px 0' }}>Payment method</Typography>
             <Typography variant='h6' >
-                    *For demo purposes only!
-                </Typography>
-                <Typography variant='subtitle1' >
-                    Please use: 4242-4242-4242-4242 (04/24) (424) (42424)
-                </Typography>
+                *For demo purposes only!
+            </Typography>
+            <Typography variant='subtitle1' >
+                Please use: 4242-4242-4242-4242 (04/24) (424) (42424)
+            </Typography>
             <Elements stripe={stripePromise}>
                 <ElementsConsumer>{({ elements, stripe }) => (
                     <form onSubmit={(e) => handleSubmit(e, elements, stripe)}>
