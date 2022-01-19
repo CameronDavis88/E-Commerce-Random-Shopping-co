@@ -17,12 +17,13 @@ const NavBar = ({ totalItemsInCart }) => {
                         <img  src={logo} alt="logo" height='20px'/>  
                         The Random Shopping Co.
                     </Typography>
-                    <div className='spaceMaker'/>
+                    <div className={classes.grow}/>
                     {location.pathname === "/" && (
                         <div>
                             <IconButton component={Link} to="/cart">
+                            <Typography >Your Cart</Typography>
                                 <Badge badgeContent={totalItemsInCart} color='secondary'>
-                                    <ShoppingCart />
+                                    <ShoppingCart/>
                                 </Badge>
                             </IconButton>
                         </div>

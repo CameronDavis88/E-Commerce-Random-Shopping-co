@@ -1,79 +1,18 @@
+# Random Shopping Co. E-Commerce Project
+### [Live-Website]: (<!-- url to hosted website  -->)
+
+## Description:
+This is a demo/practice E-Commerce website. The Home view displays products for mock sale which user can add to their cart. When ready to view their cart the user can click the shopping cart icon-button in the navbar--which also displays the numbers of items in cart. The cart view displays the items in the cart and allows the user to increase or decrease the number of each product therein or remove it entirely, empty cart of all its contents, or continue to checkout. The Checkout views first require the user's personal shipping information and then their credit/debit card information, then completes the transaction upon the user's click of the pay button. Upon completion of transaction a confirmation page is displayed which thanks the user for their purchase and displays a button which allows them to return to the home page.
+
+## Technologies Employed:
+React (including functional components, hooks, and hook-forms) was used to create the core of the application.
+Material-ui was used in much of the layout and appearance--including useStyles with style.js files.
+Commerce.js was used for as the backend of the project and held the information of the products and shipping options.
+Stripe was employed for the payment transaction portion.
 
 
+## My Experience:
+I created this app following the instructions of a YouTube video. Due to instructor's video and code being relatively old, and a few other reasons I am still not sure of, I had to debug and improvise a significant amount. It was necessary for me to consult the documentation for material-ui, react-hook-forms, commerce.js, and stripe much more than relying on the video. I am not one to say cliche pleasantries, but I have to say it really was a huge learning experience! Having no tutor, but the pre-recorded tutorial, and many of the issues not being directly discussed in any forums I could find, I had to think and work through the bugs myself--which experience gave me a profounder understanding of the concepts and patterns involved.  
 
-
-
-
-
-
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-# ecommerce-project
+## Remaining Bugs...
+After already investing too much time into this one simple project I still was unable get the final payment step to completely work: linking stripe and commerce.js in the form to send the order. The error states:" pay_what_you_want: "Pay what you want" amount is invalid " (thus the order not being created) but the value is exactly what the documentation calls for. I programmed the final step to still send the user through to the confirmation page anyway, which also clears the cart and sends a error message that the cart is now empty, which is expected. I am going to just create another project from scratch, not following anyone else at all, that is not as large and as styled to specifically practice the final step of the stripe card transaction and commerce.js capture method.
