@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Stepper, Step, StepLabel, Typography, Divider, Button, } from '@material-ui/core';
+import { Stepper, Step, StepLabel, Typography, Divider, Button, CircularProgress, } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import AddressForm from './AddressForm';
 import PaymentForm from './PaymentForm';
@@ -40,7 +40,7 @@ const Checkout = ({ cart, error, onCaptureCheckout, order, refreshCart }) => {
         nextStep();
     }
     //Creation of sub-component to be conditionally rendered in the last step to confirm completion of order
-    let ConfirmationForm = () =>
+    let ConfirmationForm = () => (order.customer ? (
         <>
             <div>
                 <Typography variant='h5' >Thank you for your purchase, {shippingData.firstName} {shippingData.lastName}!</Typography>
@@ -52,6 +52,21 @@ const Checkout = ({ cart, error, onCaptureCheckout, order, refreshCart }) => {
             <br />
             <Button component={Link} to="/" variant='outlined' type='button'>Return to Home Page</Button>
         </>
+    ) : (
+        <div className={classes.spinner} >
+            <CircularProgress/>
+        </div>
+    ) );
+
+    if (error) {
+        ConfirmationForm = () => (
+            <>
+            <Typography variant='h5' >Error: {error}</Typography>
+            <br/>
+            <Button component={Link} to="/" variant='outlined' type='button' >Return to Home</Button>
+            </>
+        );
+    }
 
     //Conditionally rendering the Form depending on the first to steps
     const Form = () => (

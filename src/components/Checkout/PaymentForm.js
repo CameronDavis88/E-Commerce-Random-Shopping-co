@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Typography, Button, Divider } from '@material-ui/core';
 import { Elements, CardElement, ElementsConsumer } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
@@ -7,7 +7,7 @@ import Review from './Review';
 //Obtaining stripePromise data from stripe by unique stripe key
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
                                 //Destructuring props
-const PaymentForm = ({ checkoutToken, nextStep, refreshCart, backStep, shippingData, onCaptureCheckout }) => {
+const PaymentForm = ({ checkoutToken, nextStep, backStep, shippingData, onCaptureCheckout }) => {
 
     const handleSubmit = async (event, elements, stripe) => {
         event.preventDefault();
@@ -53,13 +53,9 @@ const PaymentForm = ({ checkoutToken, nextStep, refreshCart, backStep, shippingD
                 payment: {
                     gateway: 'stripe',
                     stripe: {
-                        //   payment_intent_id: paymentMethod.id,
                         payment_method_id: paymentMethod.id,
                     },
                 },
-                //I don't know what is wrong here, the error message says this below is invalid
-                //but when I console.log() it it is exactly what the documentation calls for... 
-                // pay_what_you_want: `${checkoutToken.live.subtotal.formatted}`
             }
             //Sending the data as arguments through props method from App.js component
             //to be passed into Commerce.js/ capture method
@@ -67,9 +63,6 @@ const PaymentForm = ({ checkoutToken, nextStep, refreshCart, backStep, shippingD
 
             //Then sending the view to the next step which is the confirmation page 
             nextStep();
-            //Refreshes the user's cart which would not be necessary here if this final step functioned as it should
-            //because it also called in the actual handleCaptureCheckout method in App.js--which I cannot get to work...
-            // refreshCart();
         }
     };
 
@@ -77,7 +70,6 @@ const PaymentForm = ({ checkoutToken, nextStep, refreshCart, backStep, shippingD
         handleSubmit(e, elements, stripe)
     }
     
-
     return (
         <>
             <Review checkoutToken={checkoutToken}/>
@@ -93,9 +85,7 @@ const PaymentForm = ({ checkoutToken, nextStep, refreshCart, backStep, shippingD
             <Elements stripe={stripePromise} stripePromise={stripePromise}  >
                 <ElementsConsumer stripe={stripePromise} stripePromise={stripePromise}>
                     {({ elements, stripe }) => (
-                    <form onSubmit={(e) => onSubmit(e, elements, stripe)}
-                    //  onSubmit={(e) => handleSubmit(e, elements, stripe)}
-                     >
+                    <form onSubmit={(e) => onSubmit(e, elements, stripe)}>
                         <CardElement stripe={stripePromise}stripePromise={stripePromise}/>
                         <br/> 
                         <div style={{ display: 'flex', justifyContent: 'space-between' }}>

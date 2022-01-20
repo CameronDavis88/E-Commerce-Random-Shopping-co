@@ -48,10 +48,12 @@ const App = () => {
     //Sends the order through Commerce.js and saves the order in order hook
     const handleCaptureCheckout = async function (checkoutTokenId, data) {
         try {
-            const incomingOrder = await commerce.checkout.capture(checkoutTokenId, data);
-            setOrder(incomingOrder);
+            // const incomingOrder = 
+            await commerce.checkout.capture(checkoutTokenId, data);
+            // setOrder(incomingOrder);
             refreshCart();
             console.log('Success!! The next error will say that the cart is empty which is true because it was just refreshed and the page re-rendered. So all is well!')
+            console.log(order.customer)
         } catch (error) {
             setErrorMessage(error.data.error.message);
         }
