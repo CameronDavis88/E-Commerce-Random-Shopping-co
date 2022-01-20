@@ -15,12 +15,9 @@ const PaymentForm = ({ checkoutToken, nextStep, backStep, shippingData, onCaptur
 
         //Obtaining cardElements from stripe
         const cardElement = elements.getElement(CardElement);
-        // const card = elements.create('card');
-
 
         //Obtaining paymentMethod data from stripe from cardElements created above
         const { error, paymentMethod } = await stripe.createPaymentMethod({ type: 'card', card: cardElement });
-
 
         if (error) {
             console.log('[error]', error);
@@ -58,7 +55,7 @@ const PaymentForm = ({ checkoutToken, nextStep, backStep, shippingData, onCaptur
                 },
             }
             //Sending the data as arguments through props method from App.js component
-            //to be passed into Commerce.js/ capture method
+            // to be passed into Commerce.js/ capture method
             onCaptureCheckout(checkoutToken.id, orderData);
 
             //Then sending the view to the next step which is the confirmation page 
@@ -66,6 +63,8 @@ const PaymentForm = ({ checkoutToken, nextStep, backStep, shippingData, onCaptur
         }
     };
 
+    //Not sure why but if I did not submit the Forms here and in AddressForm this way calling handleSubmit in
+    // and onSubmit and passing in the onSubmit function into the onSubmit of the Form it would not work
     const onSubmit = (e, elements, stripe) => {
         handleSubmit(e, elements, stripe)
     }

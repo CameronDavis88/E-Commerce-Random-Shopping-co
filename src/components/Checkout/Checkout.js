@@ -23,7 +23,7 @@ const Checkout = ({ cart, error, onCaptureCheckout, order, refreshCart }) => {
                     const token = await commerce.checkout.generateToken(cart.id, { type: 'cart' });
                     setCheckoutToken(token);
                 } catch (error) {
-                    console.log(error)
+                    console.log(`Disregard if received a "Success" message from App.js:55.`, error )
                 }
             }
             generateToken();
@@ -40,6 +40,7 @@ const Checkout = ({ cart, error, onCaptureCheckout, order, refreshCart }) => {
         nextStep();
     }
     //Creation of sub-component to be conditionally rendered in the last step to confirm completion of order
+    //Sub-component conditionally renders a success page or an error page depending on if order was processed or not
     let ConfirmationForm = () => (order.customer ? (
         <>
             <div>
@@ -56,12 +57,15 @@ const Checkout = ({ cart, error, onCaptureCheckout, order, refreshCart }) => {
         <div className={classes.spinner} >
             <CircularProgress/>
         </div>
-    ) );
+    ) 
+    );
 
     if (error) {
         ConfirmationForm = () => (
             <>
-            <Typography variant='h5' >Error: {error}</Typography>
+            <Typography variant='h4' >Sorry, something went wrong...</Typography>
+            <br/>
+            <Typography variant='h5' >Error Message: {error}</Typography>
             <br/>
             <Button component={Link} to="/" variant='outlined' type='button' >Return to Home</Button>
             </>
