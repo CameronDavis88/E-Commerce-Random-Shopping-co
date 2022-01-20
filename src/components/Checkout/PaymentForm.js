@@ -4,21 +4,24 @@ import { Elements, CardElement, ElementsConsumer } from '@stripe/react-stripe-js
 import { loadStripe } from '@stripe/stripe-js';
 import Review from './Review';
 
+//Obtaining stripePromise data from stripe by unique stripe key
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
-
+                                //Destructuring props
 const PaymentForm = ({ checkoutToken, nextStep, refreshCart, backStep, shippingData, onCaptureCheckout }) => {
 
     const handleSubmit = async (event, elements, stripe) => {
         event.preventDefault();
-
         if (!stripe || !elements) return;
 
+        //Obtaining cardElements from stripe
         const cardElement = elements.getElement(CardElement);
+        //Obtaining paymentMethod data from stripe from cardElements created above
         const { error, paymentMethod } = await stripe.createPaymentMethod({ type: 'card', card: cardElement });
 
         if (error) {
             console.log('[error]', error);
         } else {
+            //Assigning the data of this form whose values come from the shippingData, paymentMethod, and checkoutToken
             const orderData = {
                 line_items: checkoutToken.live.line_items,
                 customer: {
@@ -54,9 +57,13 @@ const PaymentForm = ({ checkoutToken, nextStep, refreshCart, backStep, shippingD
                 //but when I console.log() it it is exactly what the documentation calls for... 
                 pay_what_you_want: `${checkoutToken.live.subtotal.formatted}`
             }
-
+            //Sending the data as arguments through props method from App.js component
+            //to be passed into Commerce.js/ capture method
             onCaptureCheckout(checkoutToken.id, orderData);
+            //Then sending the view to the next step which is the confirmation page 
             nextStep();
+            //Refreshes the user's cart which would not be necessary here if this final step functioned as it should
+            //because it also called in the actual handleCaptureCheckout method in App.js--which I cannot get to work...
             refreshCart();
         }
     };
@@ -72,6 +79,7 @@ const PaymentForm = ({ checkoutToken, nextStep, refreshCart, backStep, shippingD
             <Typography variant='subtitle1'>
                 Please use:   4242-4242-4242-4242 (04/24) (424) (42424)
             </Typography>
+            {/* The values of the card information fields in the form are submitted and sent into handleSubmit method above */}
             <Elements stripe={stripePromise} stripePromise={stripePromise}  >
                 <ElementsConsumer stripe={stripePromise} stripePromise={stripePromise} >{({ elements, stripe }) => (
                     <form onSubmit={(e) => handleSubmit(e, elements, stripe)}>
