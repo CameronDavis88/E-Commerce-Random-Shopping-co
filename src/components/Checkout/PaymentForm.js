@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Typography, Button, Divider } from '@material-ui/core';
 import { Elements, CardElement, ElementsConsumer } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
@@ -15,8 +15,12 @@ const PaymentForm = ({ checkoutToken, nextStep, refreshCart, backStep, shippingD
 
         //Obtaining cardElements from stripe
         const cardElement = elements.getElement(CardElement);
+        // const card = elements.create('card');
+
+
         //Obtaining paymentMethod data from stripe from cardElements created above
         const { error, paymentMethod } = await stripe.createPaymentMethod({ type: 'card', card: cardElement });
+
 
         if (error) {
             console.log('[error]', error);
@@ -55,39 +59,49 @@ const PaymentForm = ({ checkoutToken, nextStep, refreshCart, backStep, shippingD
                 },
                 //I don't know what is wrong here, the error message says this below is invalid
                 //but when I console.log() it it is exactly what the documentation calls for... 
-                pay_what_you_want: `${checkoutToken.live.subtotal.formatted}`
+                // pay_what_you_want: `${checkoutToken.live.subtotal.formatted}`
             }
             //Sending the data as arguments through props method from App.js component
             //to be passed into Commerce.js/ capture method
             onCaptureCheckout(checkoutToken.id, orderData);
+
             //Then sending the view to the next step which is the confirmation page 
             nextStep();
             //Refreshes the user's cart which would not be necessary here if this final step functioned as it should
             //because it also called in the actual handleCaptureCheckout method in App.js--which I cannot get to work...
-            refreshCart();
+            // refreshCart();
         }
     };
+
+    const onSubmit = (e, elements, stripe) => {
+        handleSubmit(e, elements, stripe)
+    }
+    
 
     return (
         <>
             <Review checkoutToken={checkoutToken}/>
             <Divider />
             <Typography variant="h6" gutterBottom style={{ margin: '20px 0' }}>Payment method</Typography>
-            <Typography variant='h6' >
-                *For demo purposes only!
+            <Typography variant='subtitle1' >
+                *For demo purposes only! For card information just use the numbers below*
             </Typography>
             <Typography variant='subtitle1'>
-                Please use:   4242-4242-4242-4242 (04/24) (424) (42424)
+            4242-4242-4242-4242  (04/24)  (424)  (42424)  
             </Typography>
             {/* The values of the card information fields in the form are submitted and sent into handleSubmit method above */}
             <Elements stripe={stripePromise} stripePromise={stripePromise}  >
-                <ElementsConsumer stripe={stripePromise} stripePromise={stripePromise} >{({ elements, stripe }) => (
-                    <form onSubmit={(e) => handleSubmit(e, elements, stripe)}>
+                <ElementsConsumer stripe={stripePromise} stripePromise={stripePromise}>
+                    {({ elements, stripe }) => (
+                    <form onSubmit={(e) => onSubmit(e, elements, stripe)}
+                    //  onSubmit={(e) => handleSubmit(e, elements, stripe)}
+                     >
                         <CardElement stripe={stripePromise}stripePromise={stripePromise}/>
                         <br/> 
                         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                             <Button variant="outlined" onClick={() => backStep()}>Back</Button>
-                            <Button type='submit' variant="contained" color="primary">
+                            <Button 
+                            type='submit' variant="contained" color="primary">
                                 Pay {checkoutToken.live.subtotal.formatted_with_symbol}
                             </Button>
                         </div>
