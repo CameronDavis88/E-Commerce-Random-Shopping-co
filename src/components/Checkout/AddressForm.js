@@ -5,7 +5,9 @@ import { Link } from 'react-router-dom';
 import { commerce } from '../../library/commerce';
 
 const AddressForm = ({ checkoutToken, next, nextStep }) => {
+    //Destructuring methods from react-hook-form
     const { register, handleSubmit } = useForm();
+    //React hooks
     const [shippingCountries, setShippingCountries] = useState([]);
     const [shippingCountry, setShippingCountry] = useState('');
     const [shippingSubdivisions, setShippingSubdivisions] = useState([]);

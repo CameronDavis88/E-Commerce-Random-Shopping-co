@@ -51,7 +51,7 @@ const PaymentForm = ({ checkoutToken, nextStep, refreshCart, backStep, shippingD
                     },
                 },
                 //I don't know what is wrong here, the error message says this below is invalid
-                //but when I console.log() it it is exactly what the documentation calls for...
+                //but when I console.log() it it is exactly what the documentation calls for... 
                 pay_what_you_want: `${checkoutToken.live.subtotal.formatted}`
             }
 

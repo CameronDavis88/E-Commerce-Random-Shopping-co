@@ -10,12 +10,13 @@ const App = () => {
     const [order, setOrder] = useState({});
     const [errorMessage, setErrorMessage] = useState('');
 
-    // I did the async as an arrow function but it did not work, but this anonymous one does.
+    //Fetches the information of the products previously created and uploaded onto Commerce.js
     const fetchProducts = async function () {
         const { data } = await commerce.products.list();
         setProducts(data);
     }
-
+    //Uses functionality of Commerce.js' methods to get, update, and empty Cart and add or remove items
+    //from it, and then update the cart hook
     const fetchCart = async function () {
         setCart(await commerce.cart.retrieve());
     }
@@ -44,7 +45,7 @@ const App = () => {
         const newCart = await commerce.cart.refresh();
         setCart(newCart);
     }
-
+    //Sends the order through Commerce.js and saves the order in order hook
     const handleCaptureCheckout = async function (checkoutTokenId, data) {
         try {
             const incomingOrder = await commerce.checkout.capture(checkoutTokenId, data);
@@ -62,15 +63,17 @@ const App = () => {
     }, []);
 
     return (
+        //Setting the routes to the respective components' views and sending the components their respective props
         <Router>
             <div>
-                <NavBar totalItemsInCart={cart.total_items}/>
+                <NavBar totalItemsInCart={cart.total_items} />
                 <Switch>
                     <Route exact path="/">
-                        <Products products={products} cart={cart} addToCart={onAddToCart}/>
+                        <Products products={products} cart={cart} addToCart={onAddToCart} />
                     </Route>
                     <Route path="/cart">
-                        <Cart cart={cart}
+                        <Cart
+                            cart={cart}
                             updateCartQty={updateCartQty}
                             removeFromCart={removeFromCart}
                             emptyCart={emptyCart}
