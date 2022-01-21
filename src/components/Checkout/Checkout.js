@@ -23,7 +23,7 @@ const Checkout = ({ cart, error, onCaptureCheckout, order, refreshCart }) => {
                     const token = await commerce.checkout.generateToken(cart.id, { type: 'cart' });
                     setCheckoutToken(token);
                 } catch (error) {
-                    console.log(`Disregard if received a "Success" message from App.js:55.`, error )
+                    console.log(`Disregard this error if received a "Success" message from App.js:55.`, error)
                 }
             }
             generateToken();
@@ -55,19 +55,19 @@ const Checkout = ({ cart, error, onCaptureCheckout, order, refreshCart }) => {
         </>
     ) : (
         <div className={classes.spinner} >
-            <CircularProgress/>
+            <CircularProgress />
         </div>
-    ) 
+    )
     );
 
     if (error) {
         ConfirmationForm = () => (
             <>
-            <Typography variant='h4' >Sorry, something went wrong...</Typography>
-            <br/>
-            <Typography variant='h5' >Error Message: {error}</Typography>
-            <br/>
-            <Button component={Link} to="/" variant='outlined' type='button' >Return to Home</Button>
+                <Typography variant='h4' >Sorry, something went wrong...</Typography>
+                <br />
+                <Typography variant='h5' >Error Message: {error}</Typography>
+                <br />
+                <Button component={Link} to="/" variant='outlined' type='button' >Return to Home</Button>
             </>
         );
     }
@@ -75,11 +75,11 @@ const Checkout = ({ cart, error, onCaptureCheckout, order, refreshCart }) => {
     //Conditionally rendering the Form depending on the first to steps
     const Form = () => (
         activeStep === 0
-            ? <AddressForm checkoutToken={checkoutToken} next={next} nextStep={nextStep}/>
-            : <PaymentForm 
-            refreshCart={refreshCart} error={error} order={order} nextStep={nextStep} checkoutToken={checkoutToken} 
-            shippingData={shippingData} backStep={backStep} onCaptureCheckout={onCaptureCheckout}
-              />
+            ? <AddressForm checkoutToken={checkoutToken} next={next} nextStep={nextStep} />
+            : <PaymentForm
+                refreshCart={refreshCart} error={error} order={order} nextStep={nextStep} checkoutToken={checkoutToken}
+                shippingData={shippingData} backStep={backStep} onCaptureCheckout={onCaptureCheckout}
+            />
     );
 
     return (
@@ -87,17 +87,17 @@ const Checkout = ({ cart, error, onCaptureCheckout, order, refreshCart }) => {
             <main className={classes.layout} >
                 <Typography variant='h4' align='center' >Checkout</Typography>
                 {/* Maps through steps array and displays at top of page which step the user is on */}
-                <Stepper activeStep={0} className={classes.stepper}>
-                    {steps.map(step => (
-                        <Step key={step} >
-                            <StepLabel>{step}</StepLabel>
-                        </Step>
+                <Stepper activeStep={activeStep} className={classes.stepper}>
+                    {steps.map((step) => (
+                            <Step key={step}  >
+                                <StepLabel>{step}</StepLabel>
+                            </Step>
                     )
                     )}
                 </Stepper>
                 {/* Conditional rendering: If last step, displays Confirmation,
                  if not displays Form which in turn conditionally renders depending on initial steps*/}
-                {activeStep === steps.length ? <ConfirmationForm/> : checkoutToken && <Form/>}
+                {activeStep === steps.length ? <ConfirmationForm /> : checkoutToken && <Form />}
             </main>
         </>
     )
