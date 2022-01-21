@@ -15,7 +15,7 @@ const Checkout = ({ cart, error, onCaptureCheckout, order, refreshCart }) => {
     const [activeStep, setActiveStep] = useState(0);
     const [checkoutToken, setCheckoutToken] = useState('');
     const [shippingData, setShippingData] = useState({});
-    //re-renders when cart is updated and generates checkout token through commerce.js and assigns it to checkoutToken hook
+    //Re-renders when cart is updated and generates checkout token through commerce.js and assigns it to checkoutToken hook
     useEffect(
         () => {
             const generateToken = async function () {
@@ -23,6 +23,7 @@ const Checkout = ({ cart, error, onCaptureCheckout, order, refreshCart }) => {
                     const token = await commerce.checkout.generateToken(cart.id, { type: 'cart' });
                     setCheckoutToken(token);
                 } catch (error) {
+                    //Even if all goes well, the cart gets refreshed in the last step which re-renders the page with an empty cart which then send this error
                     console.log(`Disregard this error if received a "Success" message from App.js:55.`, error)
                 }
             }
@@ -57,8 +58,7 @@ const Checkout = ({ cart, error, onCaptureCheckout, order, refreshCart }) => {
         <div className={classes.spinner} >
             <CircularProgress />
         </div>
-    )
-    );
+    ));
 
     if (error) {
         ConfirmationForm = () => (
@@ -89,11 +89,10 @@ const Checkout = ({ cart, error, onCaptureCheckout, order, refreshCart }) => {
                 {/* Maps through steps array and displays at top of page which step the user is on */}
                 <Stepper activeStep={activeStep} className={classes.stepper}>
                     {steps.map((step) => (
-                            <Step key={step}  >
-                                <StepLabel>{step}</StepLabel>
-                            </Step>
-                    )
-                    )}
+                        <Step key={step}  >
+                            <StepLabel>{step}</StepLabel>
+                        </Step>
+                    ))}
                 </Stepper>
                 {/* Conditional rendering: If last step, displays Confirmation,
                  if not displays Form which in turn conditionally renders depending on initial steps*/}

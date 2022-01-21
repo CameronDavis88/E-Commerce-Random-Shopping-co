@@ -15,32 +15,28 @@ const App = () => {
         const { data } = await commerce.products.list();
         setProducts(data);
     }
+
     //Uses functionality of Commerce.js' methods to get, update, and empty Cart and add or remove items
     //from it, and then update the cart hook
     const fetchCart = async function () {
         setCart(await commerce.cart.retrieve());
     }
-
     const onAddToCart = async function (productId, quantity) {
         const { cart } = await commerce.cart.add(productId, quantity);
         setCart(cart);
     }
-
     const updateCartQty = async function (productId, quantity) {
         const { cart } = await commerce.cart.update(productId, { quantity });
         setCart(cart);
     }
-
     const removeFromCart = async function (productId) {
         const { cart } = await commerce.cart.remove(productId);
         setCart(cart);
     }
-
     const emptyCart = async function () {
         const { cart } = await commerce.cart.empty();
         setCart(cart);
     }
-
     const refreshCart = async function () {
         const newCart = await commerce.cart.refresh();
         setCart(newCart);
