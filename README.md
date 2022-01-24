@@ -1,5 +1,5 @@
 # Random Shopping Co. E-Commerce Project
-### [Live-Website]: (<!-- url to hosted website  -->)
+### [Live-Website]: (https://random-shopping-co.netlify.app/)
 
 ## Description:
 This is a demo/practice E-Commerce website. The Home view displays products for mock sale which user can add to their cart. When ready to view their cart the user can click the shopping cart icon-button in the navbar--which also displays the numbers of items in cart. The cart view displays the items in the cart and allows the user to increase or decrease the number of each product therein or remove it entirely, empty cart of all its contents, or continue to checkout. The Checkout views first require the user's personal shipping information and then their credit/debit card information, then completes the transaction upon the user's click of the pay button. Upon completion of transaction a confirmation page is displayed which thanks the user for their purchase and displays a button which allows them to return to the home page.
