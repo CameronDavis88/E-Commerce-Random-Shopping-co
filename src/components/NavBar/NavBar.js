@@ -16,7 +16,7 @@ const NavBar = ({ totalItemsInCart }) => {
                 <Toolbar>
                     <Typography component={Link} to="/" variant='h6' color='inherit' className='classes.title'>
                         <img  src={logo} alt="logo" height='20px'/>  
-                        The Random Shopping Co.
+                        Random Shopping Co.
                     </Typography>
                     {/* div below separates the brand name on left from cart icon on thr right */}
                     <div className={classes.grow}/>
@@ -35,7 +35,7 @@ const NavBar = ({ totalItemsInCart }) => {
                 </Toolbar>
             </AppBar>
         </div>
-    )
-}
+    );
+};
 
 export default NavBar;
